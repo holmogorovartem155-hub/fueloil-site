@@ -385,4 +385,104 @@ footer {
     .track-player {
         width: 100%;
     }
+
+        /* ===== МЕРЧ ===== */
+    .merch-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .merch-card {
+        background: #0d0d0d;
+        border: 1px solid #222;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .merch-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        border-color: #444;
+    }
+
+    .merch-img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        background-color: #1a1a1a;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .merch-info {
+        padding: 20px;
+    }
+
+    .merch-info h3 {
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+        font-family: 'Special Elite', monospace;
+        letter-spacing: 1px;
+    }
+
+    .merch-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        margin: 10px 0;
+    }
+
+    .merch-price::before {
+        content: "₽";
+        margin-right: 4px;
+        font-size: 0.9rem;
+        opacity: 0.7;
+    }
+
+    .merch-description {
+        font-size: 0.85rem;
+        color: #aaa;
+        line-height: 1.4;
+        margin: 12px 0;
+    }
+
+    .merch-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 15px;
+    }
+
+    .merch-size {
+        background: #1a1a1a;
+        border: 1px solid #333;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        cursor: pointer;
+    }
+
+    .merch-size:focus {
+        outline: none;
+        border-color: white;
+    }
+
+    .buy-btn {
+        background: transparent;
+        border: 1px solid white;
+        color: white;
+        padding: 8px 16px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+    }
+
+    .buy-btn:hover {
+        background: white;
+        color: black;
+    }
 }

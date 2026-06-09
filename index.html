@@ -139,21 +139,74 @@
         <div class="container">
             <h2 class="section-title">мерч</h2>
             <div class="merch-grid">
+                
+                <!-- Карточка товара 1 -->
                 <div class="merch-card">
-                    <div class="merch-img" style="background: url('assets/img/hoodie.jpg') center/cover no-repeat; background-color: #1a1a1a;"></div>
-                    <h3>худи / футболки FuelOil</h3>
-                    <p>предзаказ открыт</p>
-                    <button class="btn-outline" onclick="window.location.href='https://t.me/fueloil'">заказать</button>
+                    <div class="merch-img" style="background: url('assets/img/hoodie.jpg') center/cover no-repeat;"></div>
+                    <div class="merch-info">
+                        <h3>Худи FuelOil</h3>
+                        <p class="merch-price">2 500 ₽</p>
+                        <p class="merch-description">Чёрный худи с логотипом FuelOil. Белый принт, плотный хлопок.</p>
+                        <div class="merch-actions">
+                            <select class="merch-size">
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
+                            <button class="btn-outline buy-btn" data-product="Худи FuelOil" data-price="2500">Купить</button>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Карточка товара 2 -->
                 <div class="merch-card">
-                    <div class="merch-img" style="background: url('assets/img/stickers.jpg') center/cover no-repeat; background-color: #1a1a1a;"></div>
-                    <h3>значки / наклейки</h3>
-                    <p>розыгрыш в TG</p>
-                    <button class="btn-outline" onclick="window.location.href='https://t.me/fueloil'">подробнее</button>
+                    <div class="merch-img" style="background: url('assets/img/tshirt.jpg') center/cover no-repeat;"></div>
+                    <div class="merch-info">
+                        <h3>Футболка FuelOil</h3>
+                        <p class="merch-price">1 500 ₽</p>
+                        <p class="merch-description">Белая футболка с чёрным принтом. 100% хлопок, прямой крой.</p>
+                        <div class="merch-actions">
+                            <select class="merch-size">
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
+                            <button class="btn-outline buy-btn" data-product="Футболка FuelOil" data-price="1500">Купить</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <!-- Карточка товара 3 -->
+                <div class="merch-card">
+                    <div class="merch-img" style="background: url('assets/img/stickers.jpg') center/cover no-repeat;"></div>
+                    <div class="merch-info">
+                        <h3>Значки / Наклейки</h3>
+                        <p class="merch-price">300 ₽</p>
+                        <p class="merch-description">Набор из 3 нашивок/наклеек с логотипом группы. Можно на гитару, ноутбук, одежду.</p>
+                        <div class="merch-actions">
+                            <button class="btn-outline buy-btn" data-product="Набор стикеров FuelOil" data-price="300">Купить</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Карточка товара 4 (предзаказ) -->
+                <div class="merch-card">
+                    <div class="merch-img" style="background: #1a1a1a; display: flex; align-items: center; justify-content: center; color: #666; font-size: 2rem;">💿</div>
+                    <div class="merch-info">
+                        <h3>CD FuelOil (предзаказ)</h3>
+                        <p class="merch-price">500 ₽</p>
+                        <p class="merch-description">Дебютный альбом на CD. Digipak, дизайн от группы. Релиз — осень 2026.</p>
+                        <div class="merch-actions">
+                            <button class="btn-outline buy-btn" data-product="CD FuelOil предзаказ" data-price="500">Предзаказать</button>
+                        </div>
+                    </div>
+                </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="contacts" class="section section-dark">
         <div class="container">
