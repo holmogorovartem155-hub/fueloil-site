@@ -1,236 +1,826 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
+
 <head>
-    <base href="https://holmogorovartem155-hub.github.io/fueloil-site/">
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>FuelOil — Industrial Grunge from Moscow</title>
-    <meta name="description" content="FuelOil — московская индастриал-гранж группа. Белые комбезы, чёрная краска, грязные гитары.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FuelOil</title>
+
+    <meta name="description"
+        content="FuelOil — Russian Emo / Post-Hardcore band inspired by early My Chemical Romance.">
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-    <canvas id="noiseCanvas"></canvas>
+    <!-- ================= HEADER ================= -->
 
-    <nav class="navbar">
-        <div class="container">
-            <a href="#" class="logo">FUEL<span>OIL</span></a>
-            <button class="burger" id="burgerBtn">
-                <span></span><span></span><span></span>
-            </button>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#about">о нас</a></li>
-                <li><a href="#music">музыка</a></li>
-                <li><a href="#video">видео</a></li>
-                <li><a href="#gallery">фото</a></li>
-                <li><a href="#merch">мерч</a></li>
-                <li><a href="#contacts">контакты</a></li>
+    <header id="top">
+
+        <div class="logo">
+
+            <a href="#hero">
+
+                <img src="images/logo.png" alt="FuelOil Logo">
+
+            </a>
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li><a href="#about">About</a></li>
+                <li><a href="#members">Members</a></li>
+                <li><a href="#music">Music</a></li>
+                <li><a href="#lyrics">Lyrics</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#shows">Shows</a></li>
+                <li><a href="#contact">Contact</a></li>
+
             </ul>
-        </div>
-    </nav>
 
-    <header class="hero">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-            <h1 class="glitch" data-text="FUEL OIL">FUEL OIL</h1>
-            <p class="hero-tagline">moscow industrial grunge</p>
-            <div class="hero-buttons">
-                <a href="#music" class="btn btn-primary">Слушать</a>
-                <a href="#merch" class="btn btn-outline">Мерч</a>
-            </div>
-        </div>
-        <div class="scroll-hint">▼</div>
+        </nav>
+
     </header>
 
-    <section id="about" class="section">
-        <div class="container">
-            <h2 class="section-title">о нас</h2>
-            <div class="about-grid">
+    <!-- ================= HERO ================= -->
+
+    <main>
+
+        <section id="hero">
+
+            <div class="hero-overlay">
+
+                <p class="small-text">
+
+                    Moscow • Russia
+
+                </p>
+
+                <h1>
+
+                    FUELOIL
+
+                </h1>
+
+                <h2>
+
+                    EMO / POST-HARDCORE
+
+                </h2>
+
+                <p class="hero-description">
+
+                    There is beauty in ruined things.
+
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#music" class="button">
+
+                        LISTEN
+
+                    </a>
+
+                    <a href="#about" class="button button-outline">
+
+                        READ MORE
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="scroll-indicator">
+
+                ↓
+
+            </div>
+
+        </section>
+
+        <!-- ================= ABOUT ================= -->
+
+        <section id="about">
+
+            <div class="section-title">
+
+                <span>01</span>
+
+                <h2>About</h2>
+
+            </div>
+
+            <div class="about-container">
+
+                <div class="about-image">
+
+                    <img src="images/band-photo.jpg"
+                        alt="FuelOil Band">
+
+                </div>
+
                 <div class="about-text">
-                    <p>FuelOil — московская индастриал-гранж группа. Белые комбезы, вымазанные в чёрном. Грязные гитары. Честные тексты.</p>
-                </div>
-                <div class="members">
-                    <div class="member">
-                        <div class="member-photo" style="background: url('assets/img/yaroslav.jpg') center/cover no-repeat; background-color: #1a1a1a;"></div>
-                        <h4>Ярослав Ермаков</h4>
-                        <p>вокал, гитара, саунд-продюсер</p>
-                    </div>
-                    <div class="member">
-                        <div class="member-photo" style="background: url('assets/img/artem.jpg') center/cover no-repeat; background-color: #1a1a1a;"></div>
-                        <h4>Артём Холмогоров</h4>
-                        <p>тексты, барабаны, менеджмент</p>
-                    </div>
-                    <div class="member">
-                        <div class="member-photo" style="background: url('assets/img/arina.jpg') center/cover no-repeat; background-color: #1a1a1a;"></div>
-                        <h4>Арина Курапова</h4>
-                        <p>гитара, вокал, синтезаторы</p>
-                    </div>
-                    <div class="member">
-                        <div class="member-photo" style="background: url('assets/img/liza.jpg') center/cover no-repeat; background-color: #1a1a1a;"></div>
-                        <h4>Елизавета Синицына</h4>
-                        <p>гитара, бас-гитара</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="music" class="section section-dark">
-        <div class="container">
-            <h2 class="section-title">музыка</h2>
-            <div class="track-list">
-                <div class="track">
-                    <div class="track-info">
-                        <span class="track-name">Restaurant</span>
-                        <span class="track-duration">02:01</span>
-                    </div>
-                    <audio controls class="track-player">
-                        <source src="assets/audio/restaurant_demo.mp3" type="audio/mpeg">
-                    </audio>
-                </div>
-                <div class="track">
-                    <div class="track-info">
-                        <span class="track-name">The Sea</span>
-                        <span class="track-duration">03:06</span>
-                    </div>
-                    <audio controls class="track-player">
-                        <source src="assets/audio/the_sea_demo.mp3" type="audio/mpeg">
-                    </audio>
-                </div>
-            </div>
-            <div class="streaming-links">
-                <p>Скоро на стримингах:</p>
-                <div class="streaming-icons">
-                    <span>Spotify</span> <span>Apple Music</span> <span>Яндекс.Музыка</span> <span>Bandcamp</span>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <p>
 
-    <section id="video" class="section">
-        <div class="container">
-            <h2 class="section-title">видео</h2>
-            <div class="video-placeholder">
-                <div class="lego-teaser">
-                    <p>🎬 Lego-анимация в работе — Blender 3D</p>
-                    <div class="blender-badge">coming soon</div>
-                </div>
-            </div>
-        </div>
-    </section>
+                        FuelOil is an independent emo /
+                        post-hardcore band from Moscow.
 
-    <section id="gallery" class="section section-dark">
-        <div class="container">
-            <h2 class="section-title">фото</h2>
+                    </p>
+
+                    <p>
+
+                        Inspired by early 2000s emotional
+                        hardcore, chaotic punk and dark
+                        alternative rock, the band combines
+                        raw guitars, desperate vocals and
+                        honest lyrics.
+
+                    </p>
+
+                    <p>
+
+                        Every song tells a story about fear,
+                        memories, loss, hope and surviving
+                        another night.
+
+                    </p>
+
+                    <blockquote>
+
+                        "The world doesn't get better.
+
+                        We just become louder."
+
+                    </blockquote>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Quote between sections -->
+
+        <section class="transition">
+
+            <p>
+
+                "We're not trying to be heroes.
+
+                We're just writing what hurts."
+
+            </p>
+
+        </section>
+
+
+
+        <!-- ================= MEMBERS ================= -->
+
+        <section id="members">
+
+            <div class="section-title">
+
+                <span>02</span>
+
+                <h2>Members</h2>
+
+            </div>
+
+            <div class="members-grid">
+
+                <!-- MEMBER -->
+
+                <article class="member-card">
+
+                    <div class="member-image">
+
+                        <img src="images/members/yarik.jpg"
+                             alt="Yaroslav Ermakov">
+
+                    </div>
+
+                    <div class="member-info">
+
+                        <h3>Yaroslav Ermakov</h3>
+
+                        <p class="role">
+                            Vocals / Guitar
+                        </p>
+
+                        <p class="bio">
+
+                            Chaotic screams, melodic hooks
+                            and sleepless nights.
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <!-- MEMBER -->
+
+                <article class="member-card">
+
+                    <div class="member-image">
+
+                        <img src="images/members/artem.jpg"
+                             alt="Artem Kholmogorov">
+
+                    </div>
+
+                    <div class="member-info">
+
+                        <h3>Artem Kholmogorov</h3>
+
+                        <p class="role">
+                            Drums
+                        </p>
+
+                        <p class="bio">
+
+                            Heavy rhythms,
+                            lyrics and creative direction.
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <!-- MEMBER -->
+
+                <article class="member-card">
+
+                    <div class="member-image">
+
+                        <img src="images/members/liza.jpg"
+                             alt="Elizaveta Sinitsina">
+
+                    </div>
+
+                    <div class="member-info">
+
+                        <h3>Elizaveta Sinitsina</h3>
+
+                        <p class="role">
+                            Guitar
+                        </p>
+
+                        <p class="bio">
+
+                            Melodies hiding inside distortion.
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+                <!-- MEMBER -->
+
+                <article class="member-card">
+
+                    <div class="member-image">
+
+                        <img src="images/members/arina.jpg"
+                             alt="Arina Kurapova">
+
+                    </div>
+
+                    <div class="member-info">
+
+                        <h3>Arina Kurapova</h3>
+
+                        <p class="role">
+                            Bass / Keys
+                        </p>
+
+                        <p class="bio">
+
+                            Atmosphere, harmony and
+                            emotional textures.
+
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- ================= MUSIC ================= -->
+
+        <section id="music">
+
+            <div class="section-title">
+
+                <span>03</span>
+
+                <h2>Music</h2>
+
+            </div>
+
+            <div class="albums">
+
+                <!-- RELEASE -->
+
+                <article class="album">
+
+                    <div class="album-cover">
+
+                        <img src="images/releases/freedom.jpg"
+                             alt="Freedom">
+
+                    </div>
+
+                    <div class="album-info">
+
+                        <span class="release-type">
+
+                            SINGLE
+
+                        </span>
+
+                        <h3>
+
+                            Freedom
+
+                        </h3>
+
+                        <p>
+
+                            Debut single.
+
+                        </p>
+
+                        <div class="album-buttons">
+
+                            <a href="#">Listen</a>
+
+                            <a href="#">Lyrics</a>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <!-- RELEASE -->
+
+                <article class="album">
+
+                    <div class="album-cover">
+
+                        <img src="images/releases/beach.jpg"
+                             alt="Beach">
+
+                    </div>
+
+                    <div class="album-info">
+
+                        <span class="release-type">
+
+                            EP
+
+                        </span>
+
+                        <h3>
+
+                            Beach
+
+                        </h3>
+
+                        <p>
+
+                            Coming Soon.
+
+                        </p>
+
+                        <div class="album-buttons">
+
+                            <a href="#">Preview</a>
+
+                            <a href="#">Info</a>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- ================= LYRICS ================= -->
+
+        <section id="lyrics">
+
+            <div class="section-title">
+
+                <span>04</span>
+
+                <h2>Lyrics</h2>
+
+            </div>
+
+            <div class="lyrics-wrapper">
+
+                <article class="lyrics-card">
+
+                    <h3>
+
+                        Freedom
+
+                    </h3>
+
+                    <pre>
+
+Lost echoes of my despair
+There is nobody — empty chair
+Behind walls that only stare
+I am alone — it doesn't care...
+
+                    </pre>
+
+                    <a href="#">
+
+                        Read Full Lyrics →
+
+                    </a>
+
+                </article>
+
+                <article class="lyrics-card">
+
+                    <h3>
+
+                        Restaurant
+
+                    </h3>
+
+                    <pre>
+
+The lights are cold
+The tables wait
+Someone smiles
+But it's too late...
+
+                    </pre>
+
+                    <a href="#">
+
+                        Read Full Lyrics →
+
+                    </a>
+
+                </article>
+
+                <article class="lyrics-card">
+
+                    <h3>
+
+                        The Sea
+
+                    </h3>
+
+                    <pre>
+
+Salt inside my broken lungs
+Every wave remembers us
+Every shore forgets our names...
+
+                    </pre>
+
+                    <a href="#">
+
+                        Read Full Lyrics →
+
+                    </a>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- ================= DIVIDER ================= -->
+
+        <section class="transition">
+
+            <p>
+
+                "I never wanted heaven.
+
+                I just wanted someone to stay."
+
+            </p>
+
+        </section>
+
+        <!-- ================= GALLERY ================= -->
+
+        <section id="gallery">
+
+            <div class="section-title">
+
+                <span>05</span>
+
+                <h2>Gallery</h2>
+
+            </div>
+
             <div class="gallery-grid">
-                <div class="gallery-item" style="background: url('assets/img/gallery1.jpg') center/cover no-repeat; background-color: #1a1a1a;"></div>
-                <div class="gallery-item" style="background: url('assets/img/gallery2.jpg') center/cover no-repeat; background-color: #1a1a1a;"></div>
-                <div class="gallery-item" style="background: url('assets/img/gallery3.jpg') center/cover no-repeat; background-color: #1a1a1a;"></div>
-                <div class="gallery-item" style="background: url('assets/img/gallery4.jpg') center/cover no-repeat; background-color: #1a1a1a;"></div>
+
+                <figure class="gallery-item">
+                    <img src="images/gallery/gallery01.jpg" alt="FuelOil Live">
+                </figure>
+
+                <figure class="gallery-item">
+                    <img src="images/gallery/gallery02.jpg" alt="FuelOil Studio">
+                </figure>
+
+                <figure class="gallery-item">
+                    <img src="images/gallery/gallery03.jpg" alt="FuelOil Rehearsal">
+                </figure>
+
+                <figure class="gallery-item">
+                    <img src="images/gallery/gallery04.jpg" alt="FuelOil">
+                </figure>
+
+                <figure class="gallery-item">
+                    <img src="images/gallery/gallery05.jpg" alt="Behind the Scenes">
+                </figure>
+
+                <figure class="gallery-item">
+                    <img src="images/gallery/gallery06.jpg" alt="Backstage">
+                </figure>
+
             </div>
-        </div>
-    </section>
 
-    <section id="merch" class="section">
-        <div class="container">
-            <h2 class="section-title">мерч</h2>
-            <div class="merch-grid">
-                
-                <!-- Карточка товара 1 -->
-                <div class="merch-card">
-                    <div class="merch-img" style="background: url('assets/img/hoodie.jpg') center/cover no-repeat;"></div>
-                    <div class="merch-info">
-                        <h3>Худи FuelOil</h3>
-                        <p class="merch-price">2 500 ₽</p>
-                        <p class="merch-description">Чёрный худи с логотипом FuelOil. Белый принт, плотный хлопок.</p>
-                        <div class="merch-actions">
-                            <select class="merch-size">
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <button class="btn-outline buy-btn" data-product="Худи FuelOil" data-price="2500">Купить</button>
-                        </div>
-                    </div>
-                </div>
+        </section>
 
-                <!-- Карточка товара 2 -->
-                <div class="merch-card">
-                    <div class="merch-img" style="background: url('assets/img/tshirt.jpg') center/cover no-repeat;"></div>
-                    <div class="merch-info">
-                        <h3>Футболка FuelOil</h3>
-                        <p class="merch-price">1 500 ₽</p>
-                        <p class="merch-description">Белая футболка с чёрным принтом. 100% хлопок, прямой крой.</p>
-                        <div class="merch-actions">
-                            <select class="merch-size">
-                                <option value="S">S</option>
-                                <option value="M">M</option>
-                                <option value="L">L</option>
-                                <option value="XL">XL</option>
-                            </select>
-                            <button class="btn-outline buy-btn" data-product="Футболка FuelOil" data-price="1500">Купить</button>
-                        </div>
-                    </div>
-                </div>
+        <!-- ================= SHOWS ================= -->
 
-                <!-- Карточка товара 3 -->
-                <div class="merch-card">
-                    <div class="merch-img" style="background: url('assets/img/stickers.jpg') center/cover no-repeat;"></div>
-                    <div class="merch-info">
-                        <h3>Значки / Наклейки</h3>
-                        <p class="merch-price">300 ₽</p>
-                        <p class="merch-description">Набор из 3 нашивок/наклеек с логотипом группы. Можно на гитару, ноутбук, одежду.</p>
-                        <div class="merch-actions">
-                            <button class="btn-outline buy-btn" data-product="Набор стикеров FuelOil" data-price="300">Купить</button>
-                        </div>
-                    </div>
-                </div>
+        <section id="shows">
 
-                <!-- Карточка товара 4 (предзаказ) -->
-                <div class="merch-card">
-                    <div class="merch-img" style="background: #1a1a1a; display: flex; align-items: center; justify-content: center; color: #666; font-size: 2rem;">💿</div>
-                    <div class="merch-info">
-                        <h3>CD FuelOil (предзаказ)</h3>
-                        <p class="merch-price">500 ₽</p>
-                        <p class="merch-description">Дебютный альбом на CD. Digipak, дизайн от группы. Релиз — осень 2026.</p>
-                        <div class="merch-actions">
-                            <button class="btn-outline buy-btn" data-product="CD FuelOil предзаказ" data-price="500">Предзаказать</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="section-title">
 
-        </div>
-    </div>
-</section>
+                <span>06</span>
 
-    <section id="contacts" class="section section-dark">
-        <div class="container">
-            <h2 class="section-title">контакты</h2>
-            <div class="social-links">
-                <a href="https://t.me/fueloil" target="_blank">Telegram</a>
-                <a href="https://vk.com/fueloil" target="_blank">VK</a>
-                <a href="https://tiktok.com/@fueloil" target="_blank">TikTok</a>
-                <a href="https://fueloil.bandcamp.com" target="_blank">Bandcamp</a>
+                <h2>Shows</h2>
+
             </div>
-            <form class="email-form" id="subscribeForm" action="https://formspree.io/f/ваш_ид" method="POST">
-                <input type="email" name="email" placeholder="твоя почта для новостей" required>
-                <button type="submit" class="btn-primary">подписаться</button>
-            </form>
-            <p class="booking-email">концерты / коллабы: <strong>fueloil.band@gmail.com</strong></p>
-        </div>
-    </section>
+
+            <div class="shows-list">
+
+                <article class="show">
+
+                    <div class="show-date">
+
+                        <span class="day">--</span>
+                        <span class="month">TBA</span>
+
+                    </div>
+
+                    <div class="show-info">
+
+                        <h3>
+
+                            First FuelOil Show
+
+                        </h3>
+
+                        <p>
+
+                            Moscow, Russia
+
+                        </p>
+
+                    </div>
+
+                    <div class="show-status">
+
+                        Coming Soon
+
+                    </div>
+
+                </article>
+
+                <article class="show">
+
+                    <div class="show-date">
+
+                        <span class="day">--</span>
+                        <span class="month">TBA</span>
+
+                    </div>
+
+                    <div class="show-info">
+
+                        <h3>
+
+                            Secret Gig
+
+                        </h3>
+
+                        <p>
+
+                            Location Unknown
+
+                        </p>
+
+                    </div>
+
+                    <div class="show-status">
+
+                        Stay Tuned
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- ================= CONTACT ================= -->
+
+        <section id="contact">
+
+            <div class="section-title">
+
+                <span>07</span>
+
+                <h2>Contact</h2>
+
+            </div>
+
+            <div class="contact-container">
+
+                <div class="contact-text">
+
+                    <h3>
+
+                        Booking / Collaboration
+
+                    </h3>
+
+                    <p>
+
+                        If you want to book FuelOil,
+                        organize a show,
+                        collaborate or simply say hello —
+                        send us a message.
+
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            Email:
+                            <a href="mailto:contact@fueloil.band">
+                                contact@fueloil.band
+                            </a>
+                        </li>
+
+                        <li>
+                            Telegram:
+                            <a href="#">
+                                @FuelOilBand
+                            </a>
+                        </li>
+
+                        <li>
+                            VK:
+                            <a href="#">
+                                vk.com/fueloil
+                            </a>
+                        </li>
+
+                        <li>
+                            YouTube:
+                            <a href="#">
+                                FuelOil
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <form class="contact-form">
+
+                    <input
+                        type="text"
+                        placeholder="Your Name"
+                        required>
+
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        required>
+
+                    <textarea
+                        rows="8"
+                        placeholder="Message"
+                        required></textarea>
+
+                    <button type="submit">
+
+                        SEND MESSAGE
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+        <!-- ================= END QUOTE ================= -->
+
+        <section class="ending">
+
+            <blockquote>
+
+                "The city forgot our names.
+                So we screamed louder."
+
+            </blockquote>
+
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
 
     <footer>
-        <div class="container">
-            <p>© 2025 FuelOil. Вся грязь защищена.</p>
+
+        <div class="footer-logo">
+
+            <img src="images/logo-white.png"
+                 alt="FuelOil Logo">
+
         </div>
+
+        <p>
+
+            FuelOil
+
+        </p>
+
+        <p>
+
+            Emo • Post-Hardcore • Alternative Rock
+
+        </p>
+
+        <nav class="footer-nav">
+
+            <a href="#top">Home</a>
+            <a href="#about">About</a>
+            <a href="#music">Music</a>
+            <a href="#shows">Shows</a>
+            <a href="#contact">Contact</a>
+
+        </nav>
+
+        <div class="footer-social">
+
+            <a href="#">Spotify</a>
+            <a href="#">YouTube</a>
+            <a href="#">Telegram</a>
+            <a href="#">VK</a>
+
+        </div>
+
+        <small>
+
+            © 2026 FuelOil.
+
+            All Rights Reserved.
+
+        </small>
+
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <script src="script.js"></script>
+
 </body>
+
 </html>
