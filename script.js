@@ -1,19 +1,10 @@
 /* ============================================================
    🖤 FUELOIL — COMPLETE SCRIPT
-   Russian Emo / Post-Hardcore Band Website
-   ============================================================
-   
-   Всё в одном файле: навигация, анимации, параллакс,
-   тёмная тема, плеер, галерея, форма, эффекты.
    ============================================================ */
 
 ( function() {
 
     'use strict';
-
-    // ==========================================================
-    // 1. ОЖИДАНИЕ ЗАГРУЗКИ DOM
-    // ==========================================================
 
     if ( document.readyState === 'loading' ) {
         document.addEventListener( 'DOMContentLoaded', init );
@@ -21,17 +12,11 @@
         init();
     }
 
-    // ==========================================================
-    // 2. ГЛАВНАЯ ФУНКЦИЯ ИНИЦИАЛИЗАЦИИ
-    // ==========================================================
-
     function init() {
 
         console.log( '🖤 FuelOil — Emo / Post-Hardcore from Moscow' );
         console.log( '🎸 "The world doesn\'t get better. We just become louder."' );
-        console.log( '📢 Current lineup: Yaroslav + Artem (looking for guitarist & bassist)' );
 
-        // Запускаем все модули
         smoothNavigation();
         mobileMenu();
         scrollAnimations();
@@ -46,12 +31,13 @@
         progressBar();
         cookiesConsent();
         randomQuote();
+        merchHandler();
 
     }
 
-    // ==========================================================
-    // 3. ПЛАВНАЯ НАВИГАЦИЯ
-    // ==========================================================
+    /* ==========================================================
+       SMOOTH NAVIGATION
+    ========================================================== */
 
     function smoothNavigation() {
 
@@ -77,10 +63,8 @@
                         behavior: 'smooth'
                     } );
 
-                    // Закрываем мобильное меню
                     closeMobileMenu();
 
-                    // Обновляем URL без перезагрузки
                     if ( history.pushState ) {
                         history.pushState( null, null, targetId );
                     }
@@ -93,9 +77,9 @@
 
     }
 
-    // ==========================================================
-    // 4. МОБИЛЬНОЕ МЕНЮ (ГАМБУРГЕР)
-    // ==========================================================
+    /* ==========================================================
+       MOBILE MENU
+    ========================================================== */
 
     function mobileMenu() {
 
@@ -104,7 +88,6 @@
 
         if ( !nav ) return;
 
-        // Создаём кнопку, если её нет
         let burger = document.querySelector( '.burger-menu' );
 
         if ( !burger ) {
@@ -114,7 +97,6 @@
             burger.setAttribute( 'aria-label', 'Toggle navigation' );
             burger.setAttribute( 'aria-expanded', 'false' );
 
-            // Три полоски
             for ( let i = 0; i < 3; i++ ) {
                 const span = document.createElement( 'span' );
                 burger.appendChild( span );
@@ -124,7 +106,6 @@
 
         }
 
-        // Функция открытия/закрытия
         function toggleMenu() {
 
             const isOpen = nav.classList.contains( 'open' );
@@ -138,7 +119,6 @@
 
         burger.addEventListener( 'click', toggleMenu );
 
-        // Закрываем при клике вне меню
         document.addEventListener( 'click', function( e ) {
 
             if ( nav.classList.contains( 'open' ) ) {
@@ -153,7 +133,6 @@
 
         } );
 
-        // Закрываем при нажатии Escape
         document.addEventListener( 'keydown', function( e ) {
 
             if ( e.key === 'Escape' && nav.classList.contains( 'open' ) ) {
@@ -162,7 +141,6 @@
 
         } );
 
-        // Сохраняем функцию в глобальную область для использования в других модулях
         window.closeMobileMenu = function() {
 
             nav.classList.remove( 'open' );
@@ -174,20 +152,19 @@
 
     }
 
-    // ==========================================================
-    // 5. АНИМАЦИИ ПРИ СКРОЛЛЕ (Intersection Observer)
-    // ==========================================================
+    /* ==========================================================
+       SCROLL ANIMATIONS
+    ========================================================== */
 
     function scrollAnimations() {
 
         const elements = document.querySelectorAll( 
             '.member-card, .album, .lyrics-card, .gallery-item, ' +
-            '.show, .about-container, .contact-container, .transition'
+            '.show, .about-container, .contact-container, .transition, .merch-card'
         );
 
         if ( !elements.length ) return;
 
-        // Стили для анимации (добавляем через JS, чтобы не перегружать CSS)
         const style = document.createElement( 'style' );
         style.textContent = `
             .animate-on-scroll {
@@ -200,10 +177,7 @@
                 opacity: 1;
                 transform: translateY( 0 );
             }
-            /* Задержки для каскада */
             .members-grid .member-card:nth-child(2) { transition-delay: 0.08s; }
-            .members-grid .member-card:nth-child(3) { transition-delay: 0.16s; }
-            .members-grid .member-card:nth-child(4) { transition-delay: 0.24s; }
             .albums .album:nth-child(2) { transition-delay: 0.12s; }
             .gallery-grid .gallery-item:nth-child(2) { transition-delay: 0.05s; }
             .gallery-grid .gallery-item:nth-child(3) { transition-delay: 0.10s; }
@@ -211,13 +185,13 @@
             .gallery-grid .gallery-item:nth-child(5) { transition-delay: 0.20s; }
             .gallery-grid .gallery-item:nth-child(6) { transition-delay: 0.25s; }
             .shows-list .show:nth-child(2) { transition-delay: 0.10s; }
+            .merch-grid .merch-card:nth-child(2) { transition-delay: 0.08s; }
+            .merch-grid .merch-card:nth-child(3) { transition-delay: 0.16s; }
         `;
         document.head.appendChild( style );
 
-        // Добавляем класс всем элементам
         elements.forEach( el => el.classList.add( 'animate-on-scroll' ) );
 
-        // Observer
         const observer = new IntersectionObserver( function( entries ) {
 
             entries.forEach( entry => {
@@ -238,7 +212,6 @@
 
         elements.forEach( el => observer.observe( el ) );
 
-        // Проверяем уже видимые элементы (при загрузке)
         setTimeout( function() {
 
             elements.forEach( el => {
@@ -257,9 +230,9 @@
 
     }
 
-    // ==========================================================
-    // 6. ПАРАЛЛАКС ДЛЯ HERO
-    // ==========================================================
+    /* ==========================================================
+       PARALLAX HERO
+    ========================================================== */
 
     function parallaxHero() {
 
@@ -298,9 +271,9 @@
 
     }
 
-    // ==========================================================
-    // 7. АКТИВНЫЙ ПУНКТ МЕНЮ
-    // ==========================================================
+    /* ==========================================================
+       ACTIVE NAV HIGHLIGHT
+    ========================================================== */
 
     function activeNavHighlight() {
 
@@ -344,13 +317,12 @@
 
     }
 
-    // ==========================================================
-    // 8. КНОПКА "НАВЕРХ"
-    // ==========================================================
+    /* ==========================================================
+       SCROLL TO TOP BUTTON
+    ========================================================== */
 
     function scrollToTopButton() {
 
-        // Проверяем, есть ли уже кнопка
         let btn = document.querySelector( '.scroll-top' );
 
         if ( !btn ) {
@@ -360,7 +332,6 @@
             btn.setAttribute( 'aria-label', 'Scroll to top' );
             btn.innerHTML = '↑';
 
-            // Стили прямо в JS
             const style = document.createElement( 'style' );
             style.textContent = `
                 .scroll-top {
@@ -407,7 +378,6 @@
                         font-size: 1.2rem;
                     }
                 }
-                /* Для страниц с длинным контентом */
                 .scroll-top:active {
                     transform: scale(0.92);
                 }
@@ -418,7 +388,6 @@
 
         }
 
-        // Отображение/скрытие
         let ticking = false;
 
         window.addEventListener( 'scroll', function() {
@@ -445,7 +414,6 @@
 
         }, { passive: true } );
 
-        // Клик
         btn.addEventListener( 'click', function() {
 
             window.scrollTo( {
@@ -457,9 +425,9 @@
 
     }
 
-    // ==========================================================
-    // 9. ФОРМА ОБРАТНОЙ СВЯЗИ
-    // ==========================================================
+    /* ==========================================================
+       CONTACT FORM
+    ========================================================== */
 
     function contactFormHandler() {
 
@@ -467,7 +435,6 @@
 
         if ( !form ) return;
 
-        // Создаём контейнер для сообщений
         let messageContainer = form.querySelector( '.form-message' );
 
         if ( !messageContainer ) {
@@ -487,7 +454,6 @@
             const message = this.querySelector( 'textarea' );
             const submitBtn = this.querySelector( 'button[type="submit"]' );
 
-            // Валидация
             if ( !name.value.trim() ) {
                 showFormMessage( messageContainer, 'Введите ваше имя, пожалуйста.', 'error' );
                 name.focus();
@@ -512,15 +478,12 @@
                 return;
             }
 
-            // Имитация отправки
             const originalText = submitBtn.textContent;
             submitBtn.textContent = '⏳ Отправка...';
             submitBtn.disabled = true;
 
-            // Имитация задержки сети
             setTimeout( function() {
 
-                // Успех!
                 showFormMessage( 
                     messageContainer, 
                     '✅ Спасибо! Мы свяжемся с вами в ближайшее время. 🖤', 
@@ -535,19 +498,16 @@
 
         } );
 
-        // Вспомогательная функция валидации email
         function isValidEmail( email ) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email );
         }
 
-        // Функция показа сообщения
         function showFormMessage( container, text, type ) {
 
             container.textContent = text;
             container.className = `form-message ${type}`;
             container.style.display = 'block';
 
-            // Автоскрытие через 5 секунд
             clearTimeout( container._timeout );
 
             container._timeout = setTimeout( function() {
@@ -566,7 +526,6 @@
 
         }
 
-        // Добавляем стили для сообщений
         const msgStyles = document.createElement( 'style' );
         msgStyles.textContent = `
             .form-message {
@@ -593,9 +552,9 @@
 
     }
 
-    // ==========================================================
-    // 10. ДИНАМИЧЕСКИЙ ГОД В ФУТЕРЕ
-    // ==========================================================
+    /* ==========================================================
+       DYNAMIC FOOTER YEAR
+    ========================================================== */
 
     function dynamicFooterYear() {
 
@@ -610,9 +569,9 @@
 
     }
 
-    // ==========================================================
-    // 11. МУЗЫКАЛЬНЫЙ ПЛЕЕР (ДЕМО)
-    // ==========================================================
+    /* ==========================================================
+       MUSIC PLAYER (DEMO)
+    ========================================================== */
 
     function musicPlayer() {
 
@@ -628,7 +587,6 @@
 
                 if ( text === 'listen' ) {
 
-                    // Имитация воспроизведения
                     const parent = this.closest( '.album' );
                     const title = parent ? parent.querySelector( 'h3' ) : null;
                     const songName = title ? title.textContent : 'трек';
@@ -643,7 +601,6 @@
 
                     showToast( `📝 Открывается страница "${songName}"` );
 
-                    // Плавный скролл к разделу Lyrics
                     const lyricsSection = document.querySelector( '#lyrics' );
 
                     if ( lyricsSection ) {
@@ -669,7 +626,6 @@
 
         } );
 
-        // Toast-уведомления
         function showToast( message ) {
 
             let toast = document.querySelector( '.toast' );
@@ -736,9 +692,9 @@
 
     }
 
-    // ==========================================================
-    // 12. ГАЛЕРЕЯ — ЛАЙТБОКС
-    // ==========================================================
+    /* ==========================================================
+       GALLERY LIGHTBOX
+    ========================================================== */
 
     function galleryLightbox() {
 
@@ -746,7 +702,6 @@
 
         if ( !galleryItems.length ) return;
 
-        // Создаём лайтбокс
         let lightbox = document.querySelector( '.lightbox' );
 
         if ( !lightbox ) {
@@ -772,7 +727,6 @@
             lightbox.appendChild( caption );
             document.body.appendChild( lightbox );
 
-            // Стили
             const styles = document.createElement( 'style' );
             styles.textContent = `
                 .lightbox {
@@ -845,7 +799,6 @@
             `;
             document.head.appendChild( styles );
 
-            // Закрытие по клику на фон
             lightbox.addEventListener( 'click', function( e ) {
 
                 if ( e.target === this ) {
@@ -854,7 +807,6 @@
 
             } );
 
-            // Закрытие по Escape
             document.addEventListener( 'keydown', function( e ) {
 
                 if ( e.key === 'Escape' && lightbox.classList.contains( 'open' ) ) {
@@ -863,22 +815,18 @@
 
             } );
 
-            // Кнопка закрытия
             closeBtn.addEventListener( 'click', closeLightbox );
 
-            // Функции
             function closeLightbox() {
                 lightbox.classList.remove( 'open' );
                 lightbox.setAttribute( 'aria-hidden', 'true' );
                 document.body.style.overflow = '';
             }
 
-            // Сохраняем в глобалку
             window.closeLightbox = closeLightbox;
 
         }
 
-        // Открытие по клику на изображение
         galleryItems.forEach( img => {
 
             img.style.cursor = 'pointer';
@@ -891,7 +839,6 @@
                 lightboxImg.src = this.src;
                 lightboxImg.alt = this.alt || 'FuelOil Gallery';
 
-                // Капшн из alt или из родительского figure
                 let captionText = this.alt;
 
                 const figure = this.closest( 'figure' );
@@ -913,9 +860,9 @@
 
     }
 
-    // ==========================================================
-    // 13. ПЕЧАТАЮЩИЙСЯ ТЕКСТ В HERO
-    // ==========================================================
+    /* ==========================================================
+       TYPING EFFECT
+    ========================================================== */
 
     function typingEffect() {
 
@@ -923,15 +870,13 @@
 
         if ( !element ) return;
 
-        // Сохраняем оригинальный текст
         const originalText = element.textContent;
 
-        // Заменяем содержимое на пустоту с эффектом печати
         element.textContent = '';
 
         let index = 0;
         let isDeleting = false;
-        let speed = 80; // мс на символ
+        let speed = 80;
 
         function type() {
 
@@ -941,19 +886,16 @@
 
             if ( !isDeleting ) {
 
-                // Печатаем
                 if ( index < originalText.length ) {
                     index++;
                     setTimeout( type, speed );
                 } else {
-                    // Пауза перед удалением
                     isDeleting = true;
                     setTimeout( type, 3000 );
                 }
 
             } else {
 
-                // Удаляем
                 if ( index > 0 ) {
                     index--;
                     setTimeout( type, speed / 2 );
@@ -966,18 +908,16 @@
 
         }
 
-        // Запускаем через 1.5 секунды после загрузки
         setTimeout( type, 1500 );
 
     }
 
-    // ==========================================================
-    // 14. ПРОГРЕСС-БАР СКРОЛЛА
-    // ==========================================================
+    /* ==========================================================
+       PROGRESS BAR
+    ========================================================== */
 
     function progressBar() {
 
-        // Создаём прогресс-бар
         let bar = document.querySelector( '.scroll-progress' );
 
         if ( !bar ) {
@@ -1030,32 +970,26 @@
 
     }
 
-    // ==========================================================
-    // 15. COOKIES CONSENT (Уведомление о куках)
-    // ==========================================================
+    /* ==========================================================
+       COOKIES CONSENT
+    ========================================================== */
 
     function cookiesConsent() {
 
-        // Проверяем, согласился ли пользователь
         if ( localStorage.getItem( 'fueloil-cookies' ) === 'accepted' ) {
             return;
         }
 
-        // Создаём баннер
         const banner = document.createElement( 'div' );
         banner.className = 'cookies-banner';
 
         banner.innerHTML = `
-            <p>
-                🍪 Мы используем cookies, чтобы сайт работал лучше.
-                Продолжая использовать сайт, вы соглашаетесь с этим.
-            </p>
+            <p>🍪 Мы используем cookies, чтобы сайт работал лучше. Продолжая использовать сайт, вы соглашаетесь с этим.</p>
             <button class="cookies-accept">Принять</button>
         `;
 
         document.body.appendChild( banner );
 
-        // Стили
         const styles = document.createElement( 'style' );
         styles.textContent = `
             .cookies-banner {
@@ -1115,7 +1049,6 @@
         `;
         document.head.appendChild( styles );
 
-        // Кнопка "Принять"
         const acceptBtn = banner.querySelector( '.cookies-accept' );
 
         acceptBtn.addEventListener( 'click', function() {
@@ -1133,9 +1066,9 @@
 
     }
 
-    // ==========================================================
-    // 16. СЛУЧАЙНАЯ ЦИТАТА В ПОДВАЛЕ (пасхалка)
-    // ==========================================================
+    /* ==========================================================
+       RANDOM QUOTE
+    ========================================================== */
 
     function randomQuote() {
 
@@ -1146,20 +1079,20 @@
             '"There is beauty in ruined things."',
             '"Sometimes the only way to be heard is to break the silence."',
             '"Every scar tells a story. We\'re just sharing ours."',
-            '"The world doesn\'t get better. We just become louder."'
+            '"The world doesn\'t get better. We just become louder."',
+            '"The night is dark, but so are we."',
+            '"We are the echoes of forgotten dreams."',
+            '"Burn bright, even when it hurts."'
         ];
 
-        // Проверяем, есть ли блок .ending
         const ending = document.querySelector( '.ending blockquote' );
 
         if ( ending ) {
 
-            // Меняем цитату каждые 12 секунд (если пользователь не взаимодействует)
             let currentIndex = 0;
 
             function changeQuote() {
 
-                // Выбираем случайную, но не ту же самую
                 let newIndex;
 
                 do {
@@ -1178,21 +1111,163 @@
 
             }
 
-            // Первая смена через 8 секунд
             setTimeout( changeQuote, 8000 );
-
-            // И дальше каждые 14 секунд
             setInterval( changeQuote, 14000 );
 
         }
 
     }
 
-    // ==========================================================
-    // 17. ЗАЩИТА ОТ ОШИБОК — Fallback для старых браузеров
-    // ==========================================================
+    /* ==========================================================
+       MERCH HANDLER
+    ========================================================== */
 
-    // Полифилл для requestAnimationFrame (если вдруг)
+    function merchHandler() {
+
+        const buttons = document.querySelectorAll( '.merch-btn' );
+
+        let cartCount = document.querySelector( '.cart-count' );
+
+        if ( !cartCount ) {
+
+            cartCount = document.createElement( 'span' );
+            cartCount.className = 'cart-count';
+            cartCount.textContent = '0';
+            document.body.appendChild( cartCount );
+
+        }
+
+        let totalItems = 0;
+
+        buttons.forEach( btn => {
+
+            btn.addEventListener( 'click', function() {
+
+                const itemName = this.getAttribute( 'data-item' ) || 'товар';
+                const priceEl = this.closest( '.merch-info' ).querySelector( '.merch-price' );
+                const priceText = priceEl ? priceEl.textContent.trim() : '';
+
+                totalItems++;
+                cartCount.textContent = totalItems;
+
+                cartCount.style.opacity = '1';
+                cartCount.style.transform = 'scale(1.2)';
+
+                setTimeout( () => {
+                    cartCount.style.transform = 'scale(1)';
+                }, 200 );
+
+                showMerchToast( `🛒 Добавлено: ${itemName} — ${priceText}` );
+
+                const originalText = this.textContent;
+                this.textContent = '✅ Добавлено!';
+                this.style.borderColor = 'rgba(80, 160, 80, 0.3)';
+                this.style.background = 'rgba(80, 160, 80, 0.05)';
+
+                setTimeout( () => {
+                    this.textContent = originalText;
+                    this.style.borderColor = '';
+                    this.style.background = '';
+                }, 2000 );
+
+                if ( navigator.vibrate ) {
+                    navigator.vibrate( 30 );
+                }
+
+            } );
+
+        } );
+
+        cartCount.addEventListener( 'click', function() {
+
+            if ( totalItems === 0 ) {
+                showMerchToast( '🛒 Корзина пуста. Добавьте что-нибудь!' );
+                return;
+            }
+
+            showMerchToast( `🛒 В корзине ${totalItems} товар(а). Оформляйте заказ!` );
+
+            this.style.transform = 'scale(1.4)';
+            setTimeout( () => {
+                this.style.transform = 'scale(1)';
+            }, 300 );
+
+        } );
+
+    }
+
+    function showMerchToast( message ) {
+
+        let toast = document.querySelector( '.merch-toast' );
+
+        if ( !toast ) {
+
+            toast = document.createElement( 'div' );
+            toast.className = 'merch-toast';
+            document.body.appendChild( toast );
+
+            const styles = document.createElement( 'style' );
+            styles.textContent = `
+                .merch-toast {
+                    position: fixed;
+                    bottom: 140px;
+                    left: 50%;
+                    transform: translateX(-50%) translateY(20px);
+                    background: rgba(20, 14, 16, 0.95);
+                    border: 1px solid rgba(120, 200, 120, 0.12);
+                    color: #d4c9c9;
+                    padding: 0.8rem 2rem;
+                    border-radius: 30px;
+                    font-size: 0.8rem;
+                    backdrop-filter: blur(12px);
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: all 0.4s ease;
+                    z-index: 1000;
+                    max-width: 90%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+                    pointer-events: none;
+                    white-space: nowrap;
+                }
+                .merch-toast.show {
+                    opacity: 1;
+                    visibility: visible;
+                    transform: translateX(-50%) translateY(0);
+                }
+                @media (max-width: 480px) {
+                    .merch-toast {
+                        font-size: 0.7rem;
+                        padding: 0.6rem 1.2rem;
+                        bottom: 130px;
+                        white-space: normal;
+                        max-width: 90%;
+                    }
+                }
+                .scroll-top.visible ~ .merch-toast {
+                    bottom: 150px;
+                }
+            `;
+            document.head.appendChild( styles );
+
+        }
+
+        toast.textContent = message;
+        toast.classList.add( 'show' );
+
+        clearTimeout( toast._timeout );
+
+        toast._timeout = setTimeout( () => {
+            toast.classList.remove( 'show' );
+        }, 3000 );
+
+    }
+
+    /* ==========================================================
+       FALLBACKS
+    ========================================================== */
+
     if ( !window.requestAnimationFrame ) {
 
         window.requestAnimationFrame = function( callback ) {
@@ -1205,12 +1280,10 @@
 
     }
 
-    // Полифилл для IntersectionObserver (если совсем старый браузер)
     if ( !window.IntersectionObserver ) {
 
-        console.warn( '⚠️ IntersectionObserver не поддерживается. Анимации будут работать частично.' );
+        console.warn( '⚠️ IntersectionObserver не поддерживается.' );
 
-        // Просто показываем все элементы
         document.addEventListener( 'DOMContentLoaded', function() {
 
             const elements = document.querySelectorAll( '.animate-on-scroll' );
