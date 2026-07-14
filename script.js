@@ -32,6 +32,8 @@
         cookiesConsent();
         randomQuote();
         merchHandler();
+        merchFilters();
+        cartSystem();
 
     }
 
@@ -187,6 +189,7 @@
             .shows-list .show:nth-child(2) { transition-delay: 0.10s; }
             .merch-grid .merch-card:nth-child(2) { transition-delay: 0.08s; }
             .merch-grid .merch-card:nth-child(3) { transition-delay: 0.16s; }
+            .merch-grid .merch-card:nth-child(4) { transition-delay: 0.24s; }
         `;
         document.head.appendChild( style );
 
@@ -331,59 +334,6 @@
             btn.className = 'scroll-top';
             btn.setAttribute( 'aria-label', 'Scroll to top' );
             btn.innerHTML = '↑';
-
-            const style = document.createElement( 'style' );
-            style.textContent = `
-                .scroll-top {
-                    position: fixed;
-                    bottom: 30px;
-                    right: 30px;
-                    width: 48px;
-                    height: 48px;
-                    border-radius: 50%;
-                    background: rgba(20, 14, 16, 0.85);
-                    border: 1px solid rgba(120, 80, 80, 0.2);
-                    color: #9a8a8a;
-                    font-size: 1.5rem;
-                    font-weight: 300;
-                    cursor: pointer;
-                    opacity: 0;
-                    visibility: hidden;
-                    transition: all 0.4s ease;
-                    z-index: 999;
-                    backdrop-filter: blur(10px);
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    line-height: 1;
-                }
-                .scroll-top:hover {
-                    background: rgba(120, 80, 80, 0.15);
-                    border-color: rgba(160, 100, 100, 0.3);
-                    color: #ffffff;
-                    transform: translateY(-3px);
-                    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-                }
-                .scroll-top.visible {
-                    opacity: 1;
-                    visibility: visible;
-                }
-                @media (max-width: 480px) {
-                    .scroll-top {
-                        bottom: 20px;
-                        right: 20px;
-                        width: 42px;
-                        height: 42px;
-                        font-size: 1.2rem;
-                    }
-                }
-                .scroll-top:active {
-                    transform: scale(0.92);
-                }
-            `;
-            document.head.appendChild( style );
-
             document.body.appendChild( btn );
 
         }
@@ -526,30 +476,6 @@
 
         }
 
-        const msgStyles = document.createElement( 'style' );
-        msgStyles.textContent = `
-            .form-message {
-                padding: 0.8rem 1.2rem;
-                border-radius: 4px;
-                font-size: 0.85rem;
-                text-align: center;
-                margin-bottom: 0.8rem;
-                display: none;
-                transition: opacity 0.5s ease;
-            }
-            .form-message.success {
-                color: #8aaa8a;
-                border: 1px solid rgba(80, 160, 80, 0.15);
-                background: rgba(80, 160, 80, 0.05);
-            }
-            .form-message.error {
-                color: #cc8a8a;
-                border: 1px solid rgba(200, 80, 80, 0.15);
-                background: rgba(200, 80, 80, 0.05);
-            }
-        `;
-        document.head.appendChild( msgStyles );
-
     }
 
     /* ==========================================================
@@ -636,47 +562,6 @@
                 toast.className = 'toast';
                 document.body.appendChild( toast );
 
-                const styles = document.createElement( 'style' );
-                styles.textContent = `
-                    .toast {
-                        position: fixed;
-                        bottom: 90px;
-                        left: 50%;
-                        transform: translateX( -50% ) translateY( 20px );
-                        background: rgba(20, 14, 16, 0.92);
-                        border: 1px solid rgba(120, 80, 80, 0.15);
-                        color: #d4c9c9;
-                        padding: 0.8rem 2rem;
-                        border-radius: 30px;
-                        font-size: 0.8rem;
-                        letter-spacing: 0.05em;
-                        backdrop-filter: blur(12px);
-                        opacity: 0;
-                        visibility: hidden;
-                        transition: all 0.4s ease;
-                        z-index: 1000;
-                        white-space: nowrap;
-                        max-width: 90%;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        pointer-events: none;
-                        box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-                    }
-                    .toast.show {
-                        opacity: 1;
-                        visibility: visible;
-                        transform: translateX( -50% ) translateY( 0 );
-                    }
-                    @media (max-width: 480px) {
-                        .toast {
-                            font-size: 0.7rem;
-                            padding: 0.6rem 1.2rem;
-                            bottom: 75px;
-                        }
-                    }
-                `;
-                document.head.appendChild( styles );
-
             }
 
             toast.textContent = message;
@@ -726,78 +611,6 @@
             lightbox.appendChild( img );
             lightbox.appendChild( caption );
             document.body.appendChild( lightbox );
-
-            const styles = document.createElement( 'style' );
-            styles.textContent = `
-                .lightbox {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0, 0, 0, 0.92);
-                    backdrop-filter: blur(20px);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-direction: column;
-                    z-index: 2000;
-                    opacity: 0;
-                    visibility: hidden;
-                    transition: all 0.4s ease;
-                    padding: 2rem;
-                }
-                .lightbox.open {
-                    opacity: 1;
-                    visibility: visible;
-                }
-                .lightbox-image {
-                    max-width: 90%;
-                    max-height: 75vh;
-                    object-fit: contain;
-                    border-radius: 4px;
-                    box-shadow: 0 20px 80px rgba(0,0,0,0.8);
-                    transform: scale(0.95);
-                    transition: transform 0.4s ease;
-                }
-                .lightbox.open .lightbox-image {
-                    transform: scale(1);
-                }
-                .lightbox-close {
-                    position: absolute;
-                    top: 20px;
-                    right: 30px;
-                    font-size: 2rem;
-                    color: #8a7a7a;
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                    transition: color 0.3s ease;
-                    padding: 0.5rem;
-                    line-height: 1;
-                }
-                .lightbox-close:hover {
-                    color: #ffffff;
-                }
-                .lightbox-caption {
-                    color: #9a8a8a;
-                    margin-top: 1.5rem;
-                    font-size: 0.85rem;
-                    letter-spacing: 0.05em;
-                    text-align: center;
-                }
-                @media (max-width: 480px) {
-                    .lightbox-close {
-                        top: 15px;
-                        right: 20px;
-                        font-size: 1.5rem;
-                    }
-                    .lightbox-image {
-                        max-height: 60vh;
-                    }
-                }
-            `;
-            document.head.appendChild( styles );
 
             lightbox.addEventListener( 'click', function( e ) {
 
@@ -926,22 +739,6 @@
             bar.className = 'scroll-progress';
             document.body.appendChild( bar );
 
-            const styles = document.createElement( 'style' );
-            styles.textContent = `
-                .scroll-progress {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    height: 2px;
-                    background: linear-gradient(90deg, rgba(160, 80, 80, 0.6), rgba(180, 120, 120, 0.3));
-                    width: 0%;
-                    z-index: 1001;
-                    transition: width 0.1s ease;
-                    box-shadow: 0 0 20px rgba(160, 80, 80, 0.15);
-                }
-            `;
-            document.head.appendChild( styles );
-
         }
 
         let ticking = false;
@@ -989,65 +786,6 @@
         `;
 
         document.body.appendChild( banner );
-
-        const styles = document.createElement( 'style' );
-        styles.textContent = `
-            .cookies-banner {
-                position: fixed;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX( -50% );
-                background: rgba(16, 12, 14, 0.95);
-                border: 1px solid rgba(120, 80, 80, 0.1);
-                backdrop-filter: blur(16px);
-                padding: 1rem 2rem;
-                border-radius: 12px;
-                display: flex;
-                align-items: center;
-                gap: 1.5rem;
-                z-index: 9999;
-                max-width: 90%;
-                box-shadow: 0 8px 40px rgba(0,0,0,0.6);
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .cookies-banner p {
-                font-size: 0.8rem;
-                color: #9a8a8a;
-                margin: 0;
-                letter-spacing: 0.02em;
-            }
-            .cookies-accept {
-                background: rgba(120, 80, 80, 0.15);
-                border: 1px solid rgba(120, 80, 80, 0.2);
-                color: #d4c9c9;
-                padding: 0.4rem 1.8rem;
-                border-radius: 30px;
-                cursor: pointer;
-                font-size: 0.7rem;
-                text-transform: uppercase;
-                letter-spacing: 0.1em;
-                transition: all 0.3s ease;
-                white-space: nowrap;
-            }
-            .cookies-accept:hover {
-                background: rgba(120, 80, 80, 0.25);
-                border-color: rgba(160, 100, 100, 0.3);
-                color: #ffffff;
-            }
-            @media (max-width: 480px) {
-                .cookies-banner {
-                    padding: 0.8rem 1.2rem;
-                    gap: 0.8rem;
-                    bottom: 10px;
-                }
-                .cookies-banner p {
-                    font-size: 0.7rem;
-                    text-align: center;
-                }
-            }
-        `;
-        document.head.appendChild( styles );
 
         const acceptBtn = banner.querySelector( '.cookies-accept' );
 
@@ -1119,46 +857,106 @@
     }
 
     /* ==========================================================
-       MERCH HANDLER
+       MERCH FILTERS
+    ========================================================== */
+
+    function merchFilters() {
+        const buttons = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.merch-card');
+        
+        if (!buttons.length || !cards.length) return;
+        
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                buttons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                
+                cards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'block';
+                    } else if (card.dataset.category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    }
+
+    /* ==========================================================
+       MERCH HANDLER (Add to cart)
     ========================================================== */
 
     function merchHandler() {
 
         const buttons = document.querySelectorAll( '.merch-btn' );
 
-        let cartCount = document.querySelector( '.cart-count' );
-
-        if ( !cartCount ) {
-
-            cartCount = document.createElement( 'span' );
-            cartCount.className = 'cart-count';
-            cartCount.textContent = '0';
-            document.body.appendChild( cartCount );
-
-        }
-
-        let totalItems = 0;
-
         buttons.forEach( btn => {
 
             btn.addEventListener( 'click', function() {
 
+                const card = this.closest('.merch-card');
                 const itemName = this.getAttribute( 'data-item' ) || 'товар';
-                const priceEl = this.closest( '.merch-info' ).querySelector( '.merch-price' );
-                const priceText = priceEl ? priceEl.textContent.trim() : '';
+                const price = parseInt(this.getAttribute( 'data-price' )) || 0;
+                
+                // Get selected size
+                const sizeBtn = card.querySelector('.size-btn.active');
+                const size = sizeBtn ? sizeBtn.dataset.size : 'One Size';
+                
+                // Get quantity
+                const qtyEl = card.querySelector('.qty-count');
+                const quantity = qtyEl ? parseInt(qtyEl.textContent) : 1;
+                
+                // Get stock
+                const stockEl = card.querySelector('.stock-count');
+                const stock = stockEl ? parseInt(stockEl.textContent) : 99;
+                
+                // Check stock
+                if (quantity > stock) {
+                    showAddToCartNotification('❌ Недостаточно товара на складе!', '');
+                    return;
+                }
 
-                totalItems++;
-                cartCount.textContent = totalItems;
+                // Add to cart
+                addToCart({
+                    name: itemName,
+                    price: price,
+                    size: size,
+                    quantity: quantity,
+                    stock: stock
+                });
 
-                cartCount.style.opacity = '1';
-                cartCount.style.transform = 'scale(1.2)';
+                // Update stock display
+                if (stockEl) {
+                    const newStock = stock - quantity;
+                    stockEl.textContent = newStock;
+                    
+                    // Update dot
+                    const dot = card.querySelector('.stock-dot');
+                    if (dot) {
+                        if (newStock <= 3) {
+                            dot.classList.add('low');
+                        } else {
+                            dot.classList.remove('low');
+                        }
+                        if (newStock <= 0) {
+                            dot.classList.add('out');
+                            this.textContent = '❌ Нет в наличии';
+                            this.disabled = true;
+                        }
+                    }
+                }
 
-                setTimeout( () => {
-                    cartCount.style.transform = 'scale(1)';
-                }, 200 );
+                // Show notification
+                showAddToCartNotification(
+                    `🛒 ${itemName}`, 
+                    `${price * quantity} ₽`
+                );
 
-                showMerchToast( `🛒 Добавлено: ${itemName} — ${priceText}` );
-
+                // Button feedback
                 const originalText = this.textContent;
                 this.textContent = '✅ Добавлено!';
                 this.style.borderColor = 'rgba(80, 160, 80, 0.3)';
@@ -1178,90 +976,350 @@
 
         } );
 
-        cartCount.addEventListener( 'click', function() {
+        // Size selector
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const parent = this.closest('.size-selector');
+                parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
 
-            if ( totalItems === 0 ) {
-                showMerchToast( '🛒 Корзина пуста. Добавьте что-нибудь!' );
-                return;
-            }
-
-            showMerchToast( `🛒 В корзине ${totalItems} товар(а). Оформляйте заказ!` );
-
-            this.style.transform = 'scale(1.4)';
-            setTimeout( () => {
-                this.style.transform = 'scale(1)';
-            }, 300 );
-
-        } );
+        // Quantity controls
+        document.querySelectorAll('.quantity-selector').forEach(selector => {
+            const minus = selector.querySelector('.minus');
+            const plus = selector.querySelector('.plus');
+            const count = selector.querySelector('.qty-count');
+            
+            minus.addEventListener('click', function() {
+                let val = parseInt(count.textContent);
+                if (val > 1) {
+                    count.textContent = val - 1;
+                }
+            });
+            
+            plus.addEventListener('click', function() {
+                let val = parseInt(count.textContent);
+                const card = this.closest('.merch-card');
+                const stockEl = card ? card.querySelector('.stock-count') : null;
+                const stock = stockEl ? parseInt(stockEl.textContent) : 99;
+                if (val < stock) {
+                    count.textContent = val + 1;
+                } else {
+                    showAddToCartNotification('⚠️ Больше нет на складе', '');
+                }
+            });
+        });
 
     }
 
-    function showMerchToast( message ) {
+    /* ==========================================================
+       CART SYSTEM
+    ========================================================== */
 
-        let toast = document.querySelector( '.merch-toast' );
+    let cart = [];
+    let discountApplied = 0;
 
-        if ( !toast ) {
-
-            toast = document.createElement( 'div' );
-            toast.className = 'merch-toast';
-            document.body.appendChild( toast );
-
-            const styles = document.createElement( 'style' );
-            styles.textContent = `
-                .merch-toast {
-                    position: fixed;
-                    bottom: 140px;
-                    left: 50%;
-                    transform: translateX(-50%) translateY(20px);
-                    background: rgba(20, 14, 16, 0.95);
-                    border: 1px solid rgba(120, 200, 120, 0.12);
-                    color: #d4c9c9;
-                    padding: 0.8rem 2rem;
-                    border-radius: 30px;
-                    font-size: 0.8rem;
-                    backdrop-filter: blur(12px);
-                    opacity: 0;
-                    visibility: hidden;
-                    transition: all 0.4s ease;
-                    z-index: 1000;
-                    max-width: 90%;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-                    pointer-events: none;
-                    white-space: nowrap;
-                }
-                .merch-toast.show {
-                    opacity: 1;
-                    visibility: visible;
-                    transform: translateX(-50%) translateY(0);
-                }
-                @media (max-width: 480px) {
-                    .merch-toast {
-                        font-size: 0.7rem;
-                        padding: 0.6rem 1.2rem;
-                        bottom: 130px;
-                        white-space: normal;
-                        max-width: 90%;
-                    }
-                }
-                .scroll-top.visible ~ .merch-toast {
-                    bottom: 150px;
-                }
-            `;
-            document.head.appendChild( styles );
-
+    function addToCart(item) {
+        const existing = cart.find(i => i.name === item.name && i.size === item.size);
+        if (existing) {
+            existing.quantity += item.quantity;
+        } else {
+            cart.push({...item});
         }
+        updateCartUI();
+        updateCartCount();
+    }
 
-        toast.textContent = message;
-        toast.classList.add( 'show' );
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCartUI();
+        updateCartCount();
+    }
 
-        clearTimeout( toast._timeout );
+    function updateCartCount() {
+        const countEl = document.querySelector('.cart-count');
+        if (!countEl) return;
+        const total = cart.reduce((sum, i) => sum + i.quantity, 0);
+        if (total > 0) {
+            countEl.textContent = total;
+            countEl.classList.add('visible');
+        } else {
+            countEl.classList.remove('visible');
+        }
+    }
 
-        toast._timeout = setTimeout( () => {
-            toast.classList.remove( 'show' );
-        }, 3000 );
+    function updateCartUI() {
+        const container = document.getElementById('cartItems');
+        const totalEl = document.getElementById('cartTotal');
+        
+        if (!container || !totalEl) return;
+        
+        if (cart.length === 0) {
+            container.innerHTML = '<div class="empty-cart">Корзина пуста</div>';
+            totalEl.textContent = '₽0';
+            return;
+        }
+        
+        let html = '';
+        let total = 0;
+        
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            html += `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <span class="cart-item-name">${item.name}</span>
+                        <span class="cart-item-meta">${item.size} × ${item.quantity}</span>
+                    </div>
+                    <div class="cart-item-price">
+                        <span>${itemTotal} ₽</span>
+                        <button class="cart-item-remove" data-index="${index}">✕</button>
+                    </div>
+                </div>
+            `;
+        });
+        
+        // Apply discount
+        if (discountApplied > 0) {
+            const discountAmount = Math.round(total * discountApplied / 100);
+            total = total - discountAmount;
+            html += `
+                <div style="color: #8aaa8a; text-align: right; font-size: 0.8rem; padding: 0.5rem 0;">
+                    Скидка ${discountApplied}%: -${discountAmount} ₽
+                </div>
+            `;
+        }
+        
+        container.innerHTML = html;
+        totalEl.textContent = `₽${total}`;
+        
+        // Remove buttons
+        container.querySelectorAll('.cart-item-remove').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
+                removeFromCart(index);
+            });
+        });
+        
+        // Update cart count badge click
+        const countEl = document.querySelector('.cart-count');
+        if (countEl) {
+            countEl.addEventListener('click', openCart);
+        }
+    }
 
+    function openCart() {
+        const overlay = document.getElementById('cartOverlay');
+        if (overlay) {
+            overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeCart() {
+        const overlay = document.getElementById('cartOverlay');
+        if (overlay) {
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    }
+
+    function getCartTotal() {
+        let total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+        if (discountApplied > 0) {
+            total = total - Math.round(total * discountApplied / 100);
+        }
+        return total;
+    }
+
+    function getCartItems() {
+        return cart;
+    }
+
+    function showAddToCartNotification(itemName, price) {
+        const notification = document.createElement('div');
+        notification.className = 'cart-notification';
+        notification.innerHTML = `
+            <span>🛒</span>
+            <span>${itemName}</span>
+            <span>${price ? price + ' добавлен в корзину' : ''}</span>
+        `;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 500);
+        }, 2500);
+    }
+
+    /* ==========================================================
+       CART SYSTEM - INIT
+    ========================================================== */
+
+    function cartSystem() {
+        
+        // Cart overlay controls
+        const overlay = document.getElementById('cartOverlay');
+        const closeBtn = document.getElementById('cartClose');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeCart);
+        }
+        
+        if (overlay) {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeCart();
+                }
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeCart();
+                }
+            });
+        }
+        
+        // Cart count click
+        const countEl = document.querySelector('.cart-count');
+        if (countEl) {
+            countEl.addEventListener('click', openCart);
+        }
+        
+        // Promo codes
+        const promoInput = document.querySelector('.promo-input');
+        const promoApply = document.querySelector('.promo-apply');
+        const promoMessage = document.querySelector('.promo-message');
+        
+        const promoCodes = {
+            'FUELOIL10': 10,
+            'EMO2026': 15,
+            'WELCOME': 5
+        };
+        
+        if (promoApply && promoInput && promoMessage) {
+            promoApply.addEventListener('click', function() {
+                const code = promoInput.value.trim().toUpperCase();
+                
+                if (promoCodes[code]) {
+                    discountApplied = promoCodes[code];
+                    promoMessage.textContent = `✅ Скидка ${discountApplied}% применена!`;
+                    promoMessage.style.color = '#8aaa8a';
+                    updateCartUI();
+                } else {
+                    discountApplied = 0;
+                    promoMessage.textContent = '❌ Неверный промокод';
+                    promoMessage.style.color = '#cc6a6a';
+                    updateCartUI();
+                }
+            });
+            
+            promoInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    promoApply.click();
+                }
+            });
+        }
+        
+        // Checkout
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    showAddToCartNotification('⚠️ Корзина пуста', '');
+                    return;
+                }
+                
+                const total = getCartTotal();
+                const items = getCartItems();
+                
+                // Show order form
+                showOrderForm(items, total);
+            });
+        }
+    }
+
+    /* ==========================================================
+       ORDER FORM
+    ========================================================== */
+
+    function showOrderForm(items, total) {
+        // Remove existing form if any
+        const existingForm = document.querySelector('.order-form-wrapper');
+        if (existingForm) {
+            existingForm.remove();
+        }
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = 'order-form-wrapper';
+        wrapper.style.cssText = `
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(120, 80, 80, 0.1);
+        `;
+        
+        wrapper.innerHTML = `
+            <h4 style="color: #ffffff; margin-bottom: 1rem; font-size: 1rem;">Оформление заказа</h4>
+            <form class="order-form" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                <input type="text" placeholder="Ваше имя" required style="background: rgba(16,12,14,0.7); border: 1px solid rgba(120,80,80,0.1); border-radius: 4px; padding: 0.8rem 1rem; color: #d4c9c9; font-size: 0.9rem;">
+                <input type="tel" placeholder="Телефон" required style="background: rgba(16,12,14,0.7); border: 1px solid rgba(120,80,80,0.1); border-radius: 4px; padding: 0.8rem 1rem; color: #d4c9c9; font-size: 0.9rem;">
+                <input type="email" placeholder="Email" required style="background: rgba(16,12,14,0.7); border: 1px solid rgba(120,80,80,0.1); border-radius: 4px; padding: 0.8rem 1rem; color: #d4c9c9; font-size: 0.9rem;">
+                <textarea placeholder="Адрес доставки" rows="3" style="background: rgba(16,12,14,0.7); border: 1px solid rgba(120,80,80,0.1); border-radius: 4px; padding: 0.8rem 1rem; color: #d4c9c9; font-size: 0.9rem; font-family: inherit; resize: vertical;"></textarea>
+                <div style="display: flex; justify-content: space-between; color: #9a8a8a; font-size: 0.85rem; padding: 0.5rem 0;">
+                    <span>${items.length} товара</span>
+                    <span>Итого: ${total} ₽</span>
+                </div>
+                <button type="submit" style="width: 100%; padding: 0.8rem; background: rgba(160,80,80,0.15); border: 1px solid rgba(160,80,80,0.2); color: #ffffff; border-radius: 30px; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; transition: all 0.3s ease;">
+                    ✅ Подтвердить заказ
+                </button>
+            </form>
+        `;
+        
+        const cartFooter = document.querySelector('.cart-footer');
+        if (cartFooter) {
+            cartFooter.appendChild(wrapper);
+        }
+        
+        // Handle order submit
+        const form = wrapper.querySelector('.order-form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const inputs = this.querySelectorAll('input, textarea');
+            let allFilled = true;
+            inputs.forEach(inp => {
+                if (!inp.value.trim()) {
+                    inp.style.borderColor = 'rgba(200,80,80,0.3)';
+                    allFilled = false;
+                } else {
+                    inp.style.borderColor = '';
+                }
+            });
+            
+            if (!allFilled) {
+                showAddToCartNotification('⚠️ Заполните все поля', '');
+                return;
+            }
+            
+            showAddToCartNotification('✅ Заказ оформлен! Свяжемся с вами 🖤', '');
+            cart = [];
+            discountApplied = 0;
+            updateCartUI();
+            updateCartCount();
+            
+            // Remove order form
+            setTimeout(() => {
+                wrapper.remove();
+                closeCart();
+            }, 1500);
+        });
     }
 
     /* ==========================================================

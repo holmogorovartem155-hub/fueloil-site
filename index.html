@@ -9,7 +9,7 @@
     <title>FuelOil — Emo / Post-Hardcore from Moscow</title>
 
     <meta name="description"
-        content="FuelOil — Russian Emo / Post-Hardcore band. Inspired by early My Chemical Romance. Moscow, Russia.">
+    content="FuelOil — Russian Emo / Post-Hardcore band. Inspired by early My Chemical Romance. Moscow, Russia.">
 
     <!-- ===== FAVICON ===== -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -140,7 +140,7 @@
                 <div class="about-image">
 
                     <img src="images/band-photo.jpg"
-                         alt="FuelOil Band">
+                    alt="FuelOil Band">
 
                 </div>
 
@@ -233,7 +233,7 @@
                     <div class="member-image">
 
                         <img src="images/members/yarik.jpg"
-                             alt="Yaroslav Ermakov">
+                        alt="Yaroslav Ermakov">
 
                     </div>
 
@@ -262,7 +262,7 @@
                     <div class="member-image">
 
                         <img src="images/members/artem.jpg"
-                             alt="Artem Kholmogorov">
+                        alt="Artem Kholmogorov">
 
                     </div>
 
@@ -323,7 +323,7 @@
                     <div class="album-cover">
 
                         <img src="images/releases/freedom.jpg"
-                             alt="Freedom">
+                        alt="Freedom">
 
                     </div>
 
@@ -366,7 +366,7 @@
                     <div class="album-cover">
 
                         <img src="images/releases/beach.jpg"
-                             alt="Beach">
+                        alt="Beach">
 
                     </div>
 
@@ -432,10 +432,10 @@
 
                     <pre>
 
-Lost echoes of my despair
-There is nobody — empty chair
-Behind walls that only stare
-I am alone — it doesn't care...
+                        Lost echoes of my despair
+                        There is nobody — empty chair
+                        Behind walls that only stare
+                        I am alone — it doesn't care...
 
                     </pre>
 
@@ -457,11 +457,10 @@ I am alone — it doesn't care...
 
                     <pre>
 
-I walked into a fancy place
-Hoping for a taste of grace
-They'd give me some to eat
-But what I got was a piece of shit!
-
+                        I walked into a fancy place
+                        Hoping for a taste of grace
+                        They'd give me some to eat
+                        But what I got was a piece of shit!
 
                     </pre>
 
@@ -483,10 +482,10 @@ But what I got was a piece of shit!
 
                     <pre>
 
-I'm standing on the shore
-Imagining how I could
-Dissolve in her sea hugs
-With air in my lungs.
+                        I'm standing on the shore
+                        Imagining how I could
+                        Dissolve in her sea hugs
+                        With air in my lungs.
 
                     </pre>
 
@@ -510,7 +509,7 @@ With air in my lungs.
 
             <p>
 
-                "There is no turning back. 
+                "There is no turning back.
 
                 And we have something to say."
 
@@ -518,6 +517,67 @@ With air in my lungs.
 
         </section>
 
+        <!-- ==========================================================
+        GALLERY
+        ========================================================== -->
+
+        <section id="gallery">
+
+            <div class="section-title">
+
+                <span>05</span>
+
+                <h2>Gallery</h2>
+
+            </div>
+
+            <div class="gallery-grid">
+
+                <figure class="gallery-item">
+
+                    <img src="images/gallery/photo1.jpg" alt="FuelOil live">
+                    <figcaption>Live at Moscow</figcaption>
+
+                </figure>
+
+                <figure class="gallery-item">
+
+                    <img src="images/gallery/photo2.jpg" alt="FuelOil rehearsal">
+                    <figcaption>Rehearsal</figcaption>
+
+                </figure>
+
+                <figure class="gallery-item">
+
+                    <img src="images/gallery/photo3.jpg" alt="FuelOil studio">
+                    <figcaption>Studio session</figcaption>
+
+                </figure>
+
+                <figure class="gallery-item">
+
+                    <img src="images/gallery/photo4.jpg" alt="FuelOil backstage">
+                    <figcaption>Backstage</figcaption>
+
+                </figure>
+
+                <figure class="gallery-item">
+
+                    <img src="images/gallery/photo5.jpg" alt="FuelOil crowd">
+                    <figcaption>Crowd</figcaption>
+
+                </figure>
+
+                <figure class="gallery-item">
+
+                    <img src="images/gallery/photo6.jpg" alt="FuelOil gear">
+                    <figcaption>Gear</figcaption>
+
+                </figure>
+
+            </div>
+
+        </section>
 
         <!-- ==========================================================
         SHOWS
@@ -619,11 +679,18 @@ With air in my lungs.
 
             </div>
 
+            <!-- ===== ФИЛЬТРЫ ===== -->
+            <div class="merch-filters">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="clothes">Одежда</button>
+                <button class="filter-btn" data-filter="accessories">Аксессуары</button>
+                <button class="filter-btn" data-filter="limited">Лимитка</button>
+            </div>
+
             <div class="merch-grid">
 
-                <!-- КАРТОЧКА 1: ЗНАЧКИ -->
-
-                <article class="merch-card">
+                <!-- КАРТОЧКА 1: ЗНАЧКИ (Аксессуары) -->
+                <article class="merch-card" data-category="accessories" data-stock="12">
 
                     <div class="merch-image">
 
@@ -644,13 +711,31 @@ With air in my lungs.
 
                         </p>
 
+                        <!-- СТОК -->
+                        <div class="stock-info">
+                            <span class="stock-dot"></span>
+                            <span class="stock-text">Осталось <span class="stock-count">12</span> шт</span>
+                        </div>
+
                         <div class="merch-price">
 
                             ₽500
 
                         </div>
 
-                        <button class="merch-btn" data-item="Значки (набор)">
+                        <!-- РАЗМЕРЫ + КОЛИЧЕСТВО -->
+                        <div class="merch-options">
+                            <div class="size-selector">
+                                <button class="size-btn" data-size="One Size">One Size</button>
+                            </div>
+                            <div class="quantity-selector">
+                                <button class="qty-btn minus">−</button>
+                                <span class="qty-count">1</span>
+                                <button class="qty-btn plus">+</button>
+                            </div>
+                        </div>
+
+                        <button class="merch-btn" data-item="Значки (набор)" data-price="500">
 
                             В корзину
 
@@ -660,9 +745,8 @@ With air in my lungs.
 
                 </article>
 
-                <!-- КАРТОЧКА 2: ЧЁРНАЯ ФУТБОЛКА -->
-
-                <article class="merch-card">
+                <!-- КАРТОЧКА 2: ЧЁРНАЯ ФУТБОЛКА (Одежда) -->
+                <article class="merch-card" data-category="clothes" data-stock="8">
 
                     <div class="merch-image">
 
@@ -683,13 +767,35 @@ With air in my lungs.
 
                         </p>
 
+                        <!-- СТОК -->
+                        <div class="stock-info">
+                            <span class="stock-dot"></span>
+                            <span class="stock-text">Осталось <span class="stock-count">8</span> шт</span>
+                        </div>
+
                         <div class="merch-price">
 
                             ₽2 200
 
                         </div>
 
-                        <button class="merch-btn" data-item="Футболка Black Edition">
+                        <!-- РАЗМЕРЫ + КОЛИЧЕСТВО -->
+                        <div class="merch-options">
+                            <div class="size-selector">
+                                <button class="size-btn" data-size="S">S</button>
+                                <button class="size-btn" data-size="M">M</button>
+                                <button class="size-btn active" data-size="L">L</button>
+                                <button class="size-btn" data-size="XL">XL</button>
+                                <button class="size-btn" data-size="XXL">XXL</button>
+                            </div>
+                            <div class="quantity-selector">
+                                <button class="qty-btn minus">−</button>
+                                <span class="qty-count">1</span>
+                                <button class="qty-btn plus">+</button>
+                            </div>
+                        </div>
+
+                        <button class="merch-btn" data-item="Футболка Black Edition" data-price="2200">
 
                             В корзину
 
@@ -699,13 +805,14 @@ With air in my lungs.
 
                 </article>
 
-                <!-- КАРТОЧКА 3: БЕЛАЯ ФУТБОЛКА -->
-
-                <article class="merch-card">
+                <!-- КАРТОЧКА 3: БЕЛАЯ ФУТБОЛКА (Одежда) -->
+                <article class="merch-card" data-category="clothes" data-stock="5">
 
                     <div class="merch-image">
 
                         <img src="images/merch/tshirt-white.jpg" alt="FuelOil T-Shirt White">
+
+                        <span class="merch-badge">LIMITED</span>
 
                     </div>
 
@@ -720,13 +827,93 @@ With air in my lungs.
 
                         </p>
 
+                        <!-- СТОК -->
+                        <div class="stock-info">
+                            <span class="stock-dot low"></span>
+                            <span class="stock-text">Осталось <span class="stock-count">5</span> шт</span>
+                        </div>
+
                         <div class="merch-price">
 
                             ₽2 200
 
                         </div>
 
-                        <button class="merch-btn" data-item="Футболка White Edition">
+                        <!-- РАЗМЕРЫ + КОЛИЧЕСТВО -->
+                        <div class="merch-options">
+                            <div class="size-selector">
+                                <button class="size-btn" data-size="S">S</button>
+                                <button class="size-btn" data-size="M">M</button>
+                                <button class="size-btn active" data-size="L">L</button>
+                                <button class="size-btn" data-size="XL">XL</button>
+                                <button class="size-btn" data-size="XXL">XXL</button>
+                            </div>
+                            <div class="quantity-selector">
+                                <button class="qty-btn minus">−</button>
+                                <span class="qty-count">1</span>
+                                <button class="qty-btn plus">+</button>
+                            </div>
+                        </div>
+
+                        <button class="merch-btn" data-item="Футболка White Edition" data-price="2200">
+
+                            В корзину
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+                <!-- КАРТОЧКА 4: ХУДИ (Одежда, Лимитка) -->
+                <article class="merch-card" data-category="limited" data-stock="3">
+
+                    <div class="merch-image">
+
+                        <img src="images/merch/hoodie.jpg" alt="FuelOil Hoodie">
+
+                        <span class="merch-badge">🔥 EXCLUSIVE</span>
+
+                    </div>
+
+                    <div class="merch-info">
+
+                        <h3>Худи — Limited Edition</h3>
+
+                        <p class="merch-desc">
+
+                            Тёплый худи с вышитым логотипом.
+                            Только 30 штук. Размеры: M, L, XL.
+
+                        </p>
+
+                        <!-- СТОК -->
+                        <div class="stock-info">
+                            <span class="stock-dot low"></span>
+                            <span class="stock-text">Осталось <span class="stock-count">3</span> шт</span>
+                        </div>
+
+                        <div class="merch-price">
+
+                            ₽4 500
+
+                        </div>
+
+                        <!-- РАЗМЕРЫ + КОЛИЧЕСТВО -->
+                        <div class="merch-options">
+                            <div class="size-selector">
+                                <button class="size-btn" data-size="M">M</button>
+                                <button class="size-btn active" data-size="L">L</button>
+                                <button class="size-btn" data-size="XL">XL</button>
+                            </div>
+                            <div class="quantity-selector">
+                                <button class="qty-btn minus">−</button>
+                                <span class="qty-count">1</span>
+                                <button class="qty-btn plus">+</button>
+                            </div>
+                        </div>
+
+                        <button class="merch-btn" data-item="Худи Limited Edition" data-price="4500">
 
                             В корзину
 
@@ -810,112 +997,148 @@ With air in my lungs.
                 <form class="contact-form">
 
                     <input
-                        type="text"
-                        placeholder="Your Name"
-                        required>
+                    type="text"
+                    placeholder="Your Name"
+                    required>
 
                     <input
-                        type="email"
-                        placeholder="Email"
-                        required>
+                    type="email"
+                    placeholder="Email"
+                    required>
 
                     <textarea
-                        rows="8"
-                        placeholder="Message"
-                        required></textarea>
+                    rows="8"
+                    placeholder="Message"
+                required></textarea>
 
-                    <button type="submit">
+                <button type="submit">
 
-                        SEND MESSAGE
+                    SEND MESSAGE
 
-                    </button>
+                </button>
 
-                </form>
+            </form>
 
+        </div>
+
+    </section>
+
+    <!-- ==========================================================
+    ENDING QUOTE
+    ========================================================== -->
+
+    <section class="ending">
+
+        <blockquote>
+
+            "The city forgot our names.
+            So we screamed louder."
+
+        </blockquote>
+
+    </section>
+
+</main>
+
+<!-- ==========================================================
+FOOTER
+========================================================== -->
+
+<footer>
+
+    <div class="footer-logo">
+
+        <img src="images/logo-white.png"
+        alt="FuelOil Logo">
+
+    </div>
+
+    <p>
+
+        FuelOil
+
+    </p>
+
+    <p>
+
+        Emo • Post-Hardcore • Alternative Rock
+
+    </p>
+
+    <nav class="footer-nav">
+
+        <a href="#top">Home</a>
+        <a href="#about">About</a>
+        <a href="#members">Members</a>
+        <a href="#music">Music</a>
+        <a href="#lyrics">Lyrics</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#shows">Shows</a>
+        <a href="#merch">Merch</a>
+        <a href="#contact">Contact</a>
+
+    </nav>
+
+    <div class="footer-social">
+
+        <a href="#">Spotify</a>
+        <a href="#">YouTube</a>
+        <a href="#">Telegram</a>
+        <a href="#">VK</a>
+
+    </div>
+
+    <small>
+
+        © 2026 FuelOil.
+
+        All Rights Reserved.
+
+    </small>
+
+</footer>
+
+<!-- ==========================================================
+CART OVERLAY (МОДАЛЬНОЕ ОКНО КОРЗИНЫ)
+========================================================== -->
+
+<div class="cart-overlay" id="cartOverlay">
+    <div class="cart-modal">
+        <div class="cart-header">
+            <h3>🛒 Корзина</h3>
+            <button class="cart-close" id="cartClose">✕</button>
+        </div>
+
+        <div class="cart-items" id="cartItems">
+            <!-- Товары будут добавлены через JS -->
+            <div class="empty-cart">Корзина пуста</div>
+        </div>
+
+        <div class="cart-footer">
+            <!-- ПРОМОКОД -->
+            <div class="promo-section">
+                <input type="text" class="promo-input" placeholder="Промокод">
+                <button class="promo-apply">Применить</button>
+                <span class="promo-message"></span>
             </div>
 
-        </section>
+            <div class="cart-total">
+                <span>Итого:</span>
+                <span id="cartTotal">₽0</span>
+            </div>
 
-        <!-- ==========================================================
-        ENDING QUOTE
-        ========================================================== -->
-
-        <section class="ending">
-
-            <blockquote>
-
-                "The city forgot our names.
-                So we screamed louder."
-
-            </blockquote>
-
-        </section>
-
-    </main>
-
-    <!-- ==========================================================
-    FOOTER
-    ========================================================== -->
-
-    <footer>
-
-        <div class="footer-logo">
-
-            <img src="images/logo-white.png"
-                 alt="FuelOil Logo">
-
+            <button class="checkout-btn" id="checkoutBtn">
+                Оформить заказ
+            </button>
         </div>
+    </div>
+</div>
 
-        <p>
+<!-- ==========================================================
+SCRIPTS
+========================================================== -->
 
-            FuelOil
-
-        </p>
-
-        <p>
-
-            Emo • Post-Hardcore • Alternative Rock
-
-        </p>
-
-        <nav class="footer-nav">
-
-            <a href="#top">Home</a>
-            <a href="#about">About</a>
-            <a href="#members">Members</a>
-            <a href="#music">Music</a>
-            <a href="#lyrics">Lyrics</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#shows">Shows</a>
-            <a href="#merch">Merch</a>
-            <a href="#contact">Contact</a>
-
-        </nav>
-
-        <div class="footer-social">
-
-            <a href="#">Spotify</a>
-            <a href="#">YouTube</a>
-            <a href="#">Telegram</a>
-            <a href="#">VK</a>
-
-        </div>
-
-        <small>
-
-            © 2026 FuelOil.
-
-            All Rights Reserved.
-
-        </small>
-
-    </footer>
-
-    <!-- ==========================================================
-    SCRIPTS
-    ========================================================== -->
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 
