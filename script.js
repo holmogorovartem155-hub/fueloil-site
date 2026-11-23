@@ -1,430 +1,394 @@
 /* ============================================================
-   🖤 FUELOIL — COMPLETE SCRIPT
+   🖤 FUELOIL — COMPLETE SCRIPT (FINAL)
    ============================================================ */
 
-( function() {
-
+(function () {
     'use strict';
 
-    if ( document.readyState === 'loading' ) {
-        document.addEventListener( 'DOMContentLoaded', init );
+    // ==========================================================
+    // КОНФИГУРАЦИЯ
+    // ==========================================================
+    const CONFIG = {
+        promoCodes: {
+            'FUELOIL10': 10,
+            'EMO2026': 15,
+            'WELCOME': 5
+        }
+    };
+
+    // ==========================================================
+    // СОСТОЯНИЕ КОРЗИНЫ (с восстановлением из localStorage)
+    // ==========================================================
+    let cart = [];
+    let discountApplied = 0;
+
+    try {
+        const savedCart = localStorage.getItem('fueloil-cart');
+        if (savedCart) cart = JSON.parse(savedCart);
+    } catch (e) {
+        console.error('Ошибка загрузки корзины', e);
+    }
+
+    // ==========================================================
+    // ИНИЦИАЛИЗАЦИЯ
+    // ==========================================================
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
     } else {
         init();
     }
 
     function init() {
+        console.log('🖤 FuelOil — Emo / Post-Hardcore from Moscow');
 
-        console.log( '🖤 FuelOil — Emo / Post-Hardcore from Moscow' );
-        console.log( '🎸 "The world doesn\'t get better. We just become louder."' );
-
+        // UI Эффекты
         smoothNavigation();
         mobileMenu();
         scrollAnimations();
         parallaxHero();
         activeNavHighlight();
         scrollToTopButton();
-        contactFormHandler();
         dynamicFooterYear();
-        musicPlayer();
-        galleryLightbox();
-        typingEffect();
         progressBar();
         cookiesConsent();
         randomQuote();
-        merchHandler();
-        merchFilters();
-        cartSystem();
+        typingEffect();
 
+        // Интерактив
+        contactFormHandler();
+        galleryLightbox();
+        musicPlayer();
+
+        // Магазин и Корзина
+        initMerch();
+        initCart();
+
+        console.log('✅ FuelOil script fully loaded.');
     }
 
-    /* ==========================================================
-       SMOOTH NAVIGATION
-    ========================================================== */
-
+    // ==========================================================
+    // ПЛАВНАЯ НАВИГАЦИЯ
+    // ==========================================================
     function smoothNavigation() {
+        const links = document.querySelectorAll('a[href^="#"]:not([href="#"])');
 
-        const links = document.querySelectorAll( 'a[href^="#"]:not([href="#"])' );
+        links.forEach(link => {
+            link.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
 
-        links.forEach( link => {
-
-            link.addEventListener( 'click', function( e ) {
-
-                const targetId = this.getAttribute( 'href' );
-                const target = document.querySelector( targetId );
-
-                if ( target ) {
-
+                if (target) {
                     e.preventDefault();
-
-                    const header = document.querySelector( 'header' );
+                    const header = document.querySelector('header');
                     const headerHeight = header ? header.offsetHeight : 0;
                     const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 10;
 
-                    window.scrollTo( {
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    } );
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
 
-                    closeMobileMenu();
+                    if (window.closeMobileMenu) window.closeMobileMenu();
 
-                    if ( history.pushState ) {
-                        history.pushState( null, null, targetId );
-                    }
-
+                    if (history.pushState) history.pushState(null, null, targetId);
                 }
-
-            } );
-
-        } );
-
+            });
+        });
     }
 
-    /* ==========================================================
-       MOBILE MENU
-    ========================================================== */
-
+    // ==========================================================
+    // МОБИЛЬНОЕ МЕНЮ
+    // ==========================================================
     function mobileMenu() {
+        const header = document.querySelector('header');
+        const nav = header ? header.querySelector('nav') : null;
+        if (!nav) return;
 
-        const header = document.querySelector( 'header' );
-        const nav = header ? header.querySelector( 'nav' ) : null;
+        let burger = document.querySelector('.burger-menu');
 
-        if ( !nav ) return;
-
-        let burger = document.querySelector( '.burger-menu' );
-
-        if ( !burger ) {
-
-            burger = document.createElement( 'button' );
+        if (!burger) {
+            burger = document.createElement('button');
             burger.className = 'burger-menu';
-            burger.setAttribute( 'aria-label', 'Toggle navigation' );
-            burger.setAttribute( 'aria-expanded', 'false' );
+            burger.setAttribute('aria-label', 'Toggle navigation');
+            burger.setAttribute('aria-expanded', 'false');
 
-            for ( let i = 0; i < 3; i++ ) {
-                const span = document.createElement( 'span' );
-                burger.appendChild( span );
+            for (let i = 0; i < 3; i++) {
+                burger.appendChild(document.createElement('span'));
             }
-
-            header.insertBefore( burger, nav );
-
+            header.insertBefore(burger, nav);
         }
 
         function toggleMenu() {
-
-            const isOpen = nav.classList.contains( 'open' );
-
-            nav.classList.toggle( 'open' );
-            burger.classList.toggle( 'active' );
-            burger.setAttribute( 'aria-expanded', !isOpen );
-            document.body.classList.toggle( 'menu-open' );
-
+            const isOpen = nav.classList.contains('open');
+            nav.classList.toggle('open');
+            burger.classList.toggle('active');
+            burger.setAttribute('aria-expanded', !isOpen);
+            document.body.classList.toggle('menu-open');
         }
 
-        burger.addEventListener( 'click', toggleMenu );
+        burger.addEventListener('click', toggleMenu);
 
-        document.addEventListener( 'click', function( e ) {
-
-            if ( nav.classList.contains( 'open' ) ) {
-
-                const isInside = nav.contains( e.target ) || burger.contains( e.target );
-
-                if ( !isInside ) {
-                    closeMobileMenu();
-                }
-
+        document.addEventListener('click', function (e) {
+            if (nav.classList.contains('open')) {
+                const isInside = nav.contains(e.target) || burger.contains(e.target);
+                if (!isInside) window.closeMobileMenu();
             }
+        });
 
-        } );
-
-        document.addEventListener( 'keydown', function( e ) {
-
-            if ( e.key === 'Escape' && nav.classList.contains( 'open' ) ) {
-                closeMobileMenu();
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && nav.classList.contains('open')) {
+                window.closeMobileMenu();
             }
+        });
 
-        } );
-
-        window.closeMobileMenu = function() {
-
-            nav.classList.remove( 'open' );
-            burger.classList.remove( 'active' );
-            burger.setAttribute( 'aria-expanded', 'false' );
-            document.body.classList.remove( 'menu-open' );
-
+        window.closeMobileMenu = function () {
+            nav.classList.remove('open');
+            burger.classList.remove('active');
+            burger.setAttribute('aria-expanded', 'false');
+            document.body.classList.remove('menu-open');
         };
-
     }
 
-    /* ==========================================================
-       SCROLL ANIMATIONS
-    ========================================================== */
-
+    // ==========================================================
+    // АНИМАЦИИ ПРИ СКРОЛЛЕ
+    // ==========================================================
     function scrollAnimations() {
-
-        const elements = document.querySelectorAll( 
+        const elements = document.querySelectorAll(
             '.member-card, .album, .lyrics-card, .gallery-item, ' +
             '.show, .about-container, .contact-container, .transition, .merch-card'
         );
+        if (!elements.length) return;
 
-        if ( !elements.length ) return;
+        elements.forEach(el => el.classList.add('animate-on-scroll'));
 
-        const style = document.createElement( 'style' );
-        style.textContent = `
-            .animate-on-scroll {
-                opacity: 0;
-                transform: translateY( 40px );
-                transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                            transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            }
-            .animate-on-scroll.visible {
-                opacity: 1;
-                transform: translateY( 0 );
-            }
-            .members-grid .member-card:nth-child(2) { transition-delay: 0.08s; }
-            .albums .album:nth-child(2) { transition-delay: 0.12s; }
-            .gallery-grid .gallery-item:nth-child(2) { transition-delay: 0.05s; }
-            .gallery-grid .gallery-item:nth-child(3) { transition-delay: 0.10s; }
-            .gallery-grid .gallery-item:nth-child(4) { transition-delay: 0.15s; }
-            .gallery-grid .gallery-item:nth-child(5) { transition-delay: 0.20s; }
-            .gallery-grid .gallery-item:nth-child(6) { transition-delay: 0.25s; }
-            .shows-list .show:nth-child(2) { transition-delay: 0.10s; }
-            .merch-grid .merch-card:nth-child(2) { transition-delay: 0.08s; }
-            .merch-grid .merch-card:nth-child(3) { transition-delay: 0.16s; }
-            .merch-grid .merch-card:nth-child(4) { transition-delay: 0.24s; }
-        `;
-        document.head.appendChild( style );
-
-        elements.forEach( el => el.classList.add( 'animate-on-scroll' ) );
-
-        const observer = new IntersectionObserver( function( entries ) {
-
-            entries.forEach( entry => {
-
-                if ( entry.isIntersecting ) {
-
-                    entry.target.classList.add( 'visible' );
-                    observer.unobserve( entry.target );
-
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
                 }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
 
-            } );
+        elements.forEach(el => observer.observe(el));
 
-        }, {
-            threshold: 0.12,
-            rootMargin: '0px 0px -30px 0px'
-        } );
-
-        elements.forEach( el => observer.observe( el ) );
-
-        setTimeout( function() {
-
-            elements.forEach( el => {
-
+        setTimeout(function () {
+            elements.forEach(el => {
                 const rect = el.getBoundingClientRect();
                 const winHeight = window.innerHeight || document.documentElement.clientHeight;
-
-                if ( rect.top < winHeight - 60 ) {
-                    el.classList.add( 'visible' );
-                    observer.unobserve( el );
+                if (rect.top < winHeight - 60) {
+                    el.classList.add('visible');
+                    observer.unobserve(el);
                 }
-
-            } );
-
-        }, 200 );
-
+            });
+        }, 200);
     }
 
-    /* ==========================================================
-       PARALLAX HERO
-    ========================================================== */
-
+    // ==========================================================
+    // ПАРАЛЛАКС ГЛАВНОГО ЭКРАНА
+    // ==========================================================
     function parallaxHero() {
-
-        const hero = document.querySelector( '#hero' );
-
-        if ( !hero ) return;
+        const hero = document.querySelector('#hero');
+        if (!hero) return;
 
         let ticking = false;
-
-        window.addEventListener( 'scroll', function() {
-
-            if ( !ticking ) {
-
-                window.requestAnimationFrame( function() {
-
+        window.addEventListener('scroll', function () {
+            if (!ticking) {
+                window.requestAnimationFrame(function () {
                     const scrollY = window.pageYOffset;
-
-                    if ( scrollY < window.innerHeight ) {
-
-                        const offset = scrollY * 0.2;
-                        hero.style.backgroundPositionY = `-${offset}px`;
+                    if (scrollY < window.innerHeight) {
+                        hero.style.backgroundPositionY = `-${scrollY * 0.2}px`;
                         hero.style.transform = `translateY(${scrollY * 0.05}px)`;
-                        hero.style.opacity = 1 - ( scrollY / window.innerHeight ) * 0.3;
-
+                        hero.style.opacity = 1 - (scrollY / window.innerHeight) * 0.3;
                     }
-
                     ticking = false;
-
-                } );
-
+                });
                 ticking = true;
-
             }
-
-        }, { passive: true } );
-
+        }, { passive: true });
     }
 
-    /* ==========================================================
-       ACTIVE NAV HIGHLIGHT
-    ========================================================== */
-
+    // ==========================================================
+    // ПОДСВЕТКА АКТИВНОГО ПУНКТА МЕНЮ
+    // ==========================================================
     function activeNavHighlight() {
-
-        const sections = document.querySelectorAll( 'section[id]' );
-        const navLinks = document.querySelectorAll( 'header nav a' );
-
-        if ( !sections.length || !navLinks.length ) return;
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('header nav a');
+        if (!sections.length || !navLinks.length) return;
 
         function updateActive() {
-
             let currentId = '';
             const scrollPos = window.pageYOffset + 150;
 
-            sections.forEach( section => {
-
-                const top = section.offsetTop;
-                const height = section.offsetHeight;
-
-                if ( scrollPos >= top && scrollPos < top + height ) {
-                    currentId = section.getAttribute( 'id' );
+            sections.forEach(section => {
+                if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+                    currentId = section.getAttribute('id');
                 }
+            });
 
-            } );
-
-            navLinks.forEach( link => {
-
-                link.classList.remove( 'active' );
-                const href = link.getAttribute( 'href' );
-
-                if ( href === `#${currentId}` ) {
-                    link.classList.add( 'active' );
-                }
-
-            } );
-
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentId}`) link.classList.add('active');
+            });
         }
 
-        window.addEventListener( 'scroll', updateActive, { passive: true } );
-        window.addEventListener( 'resize', updateActive, { passive: true } );
+        window.addEventListener('scroll', updateActive, { passive: true });
+        window.addEventListener('resize', updateActive, { passive: true });
         updateActive();
-
     }
 
-    /* ==========================================================
-       SCROLL TO TOP BUTTON
-    ========================================================== */
-
+    // ==========================================================
+    // КНОПКА ВВЕРХ
+    // ==========================================================
     function scrollToTopButton() {
-
-        let btn = document.querySelector( '.scroll-top' );
-
-        if ( !btn ) {
-
-            btn = document.createElement( 'button' );
+        let btn = document.querySelector('.scroll-top');
+        if (!btn) {
+            btn = document.createElement('button');
             btn.className = 'scroll-top';
-            btn.setAttribute( 'aria-label', 'Scroll to top' );
+            btn.setAttribute('aria-label', 'Scroll to top');
             btn.innerHTML = '↑';
-            document.body.appendChild( btn );
-
+            document.body.appendChild(btn);
         }
 
-        let ticking = false;
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 400) btn.classList.add('visible');
+            else btn.classList.remove('visible');
+        }, { passive: true });
 
-        window.addEventListener( 'scroll', function() {
-
-            if ( !ticking ) {
-
-                window.requestAnimationFrame( function() {
-
-                    const scrollY = window.pageYOffset;
-
-                    if ( scrollY > 400 ) {
-                        btn.classList.add( 'visible' );
-                    } else {
-                        btn.classList.remove( 'visible' );
-                    }
-
-                    ticking = false;
-
-                } );
-
-                ticking = true;
-
-            }
-
-        }, { passive: true } );
-
-        btn.addEventListener( 'click', function() {
-
-            window.scrollTo( {
-                top: 0,
-                behavior: 'smooth'
-            } );
-
-        } );
-
+        btn.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     }
 
-    /* ==========================================================
-       CONTACT FORM
-    ========================================================== */
+    // ==========================================================
+    // ДИНАМИЧЕСКИЙ ГОД В ФУТЕРЕ
+    // ==========================================================
+    function dynamicFooterYear() {
+        const footer = document.querySelector('footer small');
+        if (footer) {
+            footer.textContent = footer.textContent.replace(/\d{4}/, new Date().getFullYear());
+        }
+    }
 
-    function contactFormHandler() {
-
-        const form = document.querySelector( '.contact-form' );
-
-        if ( !form ) return;
-
-        let messageContainer = form.querySelector( '.form-message' );
-
-        if ( !messageContainer ) {
-
-            messageContainer = document.createElement( 'div' );
-            messageContainer.className = 'form-message';
-            form.insertBefore( messageContainer, form.querySelector( 'button' ) );
-
+    // ==========================================================
+    // ПОЛОСА ПРОКРУТКИ СВЕРХУ
+    // ==========================================================
+    function progressBar() {
+        let bar = document.querySelector('.scroll-progress');
+        if (!bar) {
+            bar = document.createElement('div');
+            bar.className = 'scroll-progress';
+            document.body.appendChild(bar);
         }
 
-        form.addEventListener( 'submit', function( e ) {
+        window.addEventListener('scroll', function () {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+        }, { passive: true });
+    }
 
+    // ==========================================================
+    // КУКИ
+    // ==========================================================
+    function cookiesConsent() {
+        if (localStorage.getItem('fueloil-cookies') === 'accepted') return;
+
+        const banner = document.createElement('div');
+        banner.className = 'cookies-banner';
+        banner.innerHTML = `
+            <p>🍪 Мы используем cookies, чтобы сайт работал лучше.</p>
+            <button class="cookies-accept">Принять</button>
+        `;
+        document.body.appendChild(banner);
+
+        banner.querySelector('.cookies-accept').addEventListener('click', function () {
+            localStorage.setItem('fueloil-cookies', 'accepted');
+            banner.style.opacity = '0';
+            banner.style.transition = 'opacity 0.4s ease';
+            setTimeout(() => banner.remove(), 400);
+        });
+    }
+
+    // ==========================================================
+    // СЛУЧАЙНАЯ ЦИТАТА В КОНЦЕ
+    // ==========================================================
+    function randomQuote() {
+        const quotes = [
+            '"The city forgot our names. So we screamed louder."',
+            '"I never wanted heaven. I just wanted someone to stay."',
+            '"We\'re not trying to be heroes. We\'re just writing what hurts."',
+            '"There is beauty in ruined things."'
+        ];
+
+        const ending = document.querySelector('.ending blockquote');
+        if (!ending) return;
+
+        let currentIndex = 0;
+        function changeQuote() {
+            let newIndex;
+            do { newIndex = Math.floor(Math.random() * quotes.length); } while (newIndex === currentIndex && quotes.length > 1);
+            currentIndex = newIndex;
+
+            ending.style.opacity = '0';
+            ending.style.transition = 'opacity 0.6s ease';
+            setTimeout(() => {
+                ending.textContent = quotes[currentIndex];
+                ending.style.opacity = '1';
+            }, 600);
+        }
+
+        setTimeout(changeQuote, 8000);
+        setInterval(changeQuote, 14000);
+    }
+
+    // ==========================================================
+    // ЭФФЕКТ ПЕЧАТАЮЩЕГОСЯ ТЕКСТА
+    // ==========================================================
+    function typingEffect() {
+        const element = document.querySelector('.hero-description');
+        if (!element) return;
+
+        const originalText = element.textContent;
+        element.textContent = '';
+
+        let index = 0;
+        let isDeleting = false;
+        const speed = 80;
+
+        function type() {
+            element.textContent = originalText.substring(0, index);
+            if (!isDeleting) {
+                if (index < originalText.length) { index++; setTimeout(type, speed); }
+                else { isDeleting = true; setTimeout(type, 3000); }
+            } else {
+                if (index > 0) { index--; setTimeout(type, speed / 2); }
+                else { isDeleting = false; setTimeout(type, 500); }
+            }
+        }
+        setTimeout(type, 1500);
+    }
+
+    // ==========================================================
+    // ОБРАБОТКА ФОРМЫ КОНТАКТОВ
+    // ==========================================================
+    function contactFormHandler() {
+        const form = document.querySelector('.contact-form');
+        if (!form) return;
+
+        let messageContainer = form.querySelector('.form-message');
+        if (!messageContainer) {
+            messageContainer = document.createElement('div');
+            messageContainer.className = 'form-message';
+            form.insertBefore(messageContainer, form.querySelector('button'));
+        }
+
+        form.addEventListener('submit', function (e) {
             e.preventDefault();
+            const name = this.querySelector('input[type="text"]');
+            const email = this.querySelector('input[type="email"]');
+            const message = this.querySelector('textarea');
+            const submitBtn = this.querySelector('button[type="submit"]');
 
-            const name = this.querySelector( 'input[type="text"]' );
-            const email = this.querySelector( 'input[type="email"]' );
-            const message = this.querySelector( 'textarea' );
-            const submitBtn = this.querySelector( 'button[type="submit"]' );
-
-            if ( !name.value.trim() ) {
-                showFormMessage( messageContainer, 'Введите ваше имя, пожалуйста.', 'error' );
-                name.focus();
-                return;
-            }
-
-            if ( !email.value.trim() ) {
-                showFormMessage( messageContainer, 'Введите email для связи.', 'error' );
-                email.focus();
-                return;
-            }
-
-            if ( !isValidEmail( email.value ) ) {
-                showFormMessage( messageContainer, 'Введите корректный email (например, name@domain.com).', 'error' );
-                email.focus();
-                return;
-            }
-
-            if ( !message.value.trim() ) {
-                showFormMessage( messageContainer, 'Напишите ваше сообщение.', 'error' );
-                message.focus();
+            if (!name.value.trim() || !email.value.trim() || !message.value.trim()) {
+                showFormMessage(messageContainer, 'Пожалуйста, заполните все поля.', 'error');
                 return;
             }
 
@@ -432,638 +396,277 @@
             submitBtn.textContent = '⏳ Отправка...';
             submitBtn.disabled = true;
 
-            setTimeout( function() {
-
-                showFormMessage( 
-                    messageContainer, 
-                    '✅ Спасибо! Мы свяжемся с вами в ближайшее время. 🖤', 
-                    'success' 
-                );
-
+            setTimeout(function () {
+                showFormMessage(messageContainer, '✅ Спасибо! Мы свяжемся с вами. 🖤', 'success');
                 form.reset();
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
+            }, 1500);
+        });
 
-            }, 1800 );
-
-        } );
-
-        function isValidEmail( email ) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email );
-        }
-
-        function showFormMessage( container, text, type ) {
-
+        function showFormMessage(container, text, type) {
             container.textContent = text;
             container.className = `form-message ${type}`;
             container.style.display = 'block';
-
-            clearTimeout( container._timeout );
-
-            container._timeout = setTimeout( function() {
-
-                container.style.opacity = '0';
-                container.style.transition = 'opacity 0.5s ease';
-
-                setTimeout( function() {
-                    container.textContent = '';
-                    container.className = 'form-message';
-                    container.style.display = 'none';
-                    container.style.opacity = '1';
-                }, 500 );
-
-            }, 5000 );
-
+            setTimeout(() => { container.style.opacity = '0'; }, 4000);
+            setTimeout(() => {
+                container.className = 'form-message';
+                container.style.display = 'none';
+                container.style.opacity = '1';
+            }, 4500);
         }
-
     }
 
-    /* ==========================================================
-       DYNAMIC FOOTER YEAR
-    ========================================================== */
-
-    function dynamicFooterYear() {
-
-        const footer = document.querySelector( 'footer small' );
-
-        if ( footer ) {
-
-            const year = new Date().getFullYear();
-            footer.textContent = footer.textContent.replace( /\d{4}/, year );
-
-        }
-
-    }
-
-    /* ==========================================================
-       MUSIC PLAYER (DEMO)
-    ========================================================== */
-
-    function musicPlayer() {
-
-        const albumButtons = document.querySelectorAll( '.album-buttons a' );
-
-        albumButtons.forEach( btn => {
-
-            btn.addEventListener( 'click', function( e ) {
-
-                e.preventDefault();
-
-                const text = this.textContent.trim().toLowerCase();
-
-                if ( text === 'listen' ) {
-
-                    const parent = this.closest( '.album' );
-                    const title = parent ? parent.querySelector( 'h3' ) : null;
-                    const songName = title ? title.textContent : 'трек';
-
-                    showToast( `▶️ Воспроизведение "${songName}" (демо-режим)` );
-
-                } else if ( text === 'lyrics' || text === 'info' || text === 'preview' ) {
-
-                    const parent = this.closest( '.album' );
-                    const title = parent ? parent.querySelector( 'h3' ) : null;
-                    const songName = title ? title.textContent : 'трек';
-
-                    showToast( `📝 Открывается страница "${songName}"` );
-
-                    const lyricsSection = document.querySelector( '#lyrics' );
-
-                    if ( lyricsSection ) {
-
-                        setTimeout( function() {
-
-                            const header = document.querySelector( 'header' );
-                            const headerHeight = header ? header.offsetHeight : 0;
-                            const targetPos = lyricsSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
-
-                            window.scrollTo( {
-                                top: targetPos,
-                                behavior: 'smooth'
-                            } );
-
-                        }, 300 );
-
-                    }
-
-                }
-
-            } );
-
-        } );
-
-        function showToast( message ) {
-
-            let toast = document.querySelector( '.toast' );
-
-            if ( !toast ) {
-
-                toast = document.createElement( 'div' );
-                toast.className = 'toast';
-                document.body.appendChild( toast );
-
-            }
-
-            toast.textContent = message;
-            toast.classList.add( 'show' );
-
-            clearTimeout( toast._timeout );
-
-            toast._timeout = setTimeout( function() {
-                toast.classList.remove( 'show' );
-            }, 2500 );
-
-        }
-
-    }
-
-    /* ==========================================================
-       GALLERY LIGHTBOX
-    ========================================================== */
-
+    // ==========================================================
+    // ЛАЙТБОКС ДЛЯ ГАЛЕРЕИ
+    // ==========================================================
     function galleryLightbox() {
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+        if (!galleryItems.length) return;
 
-        const galleryItems = document.querySelectorAll( '.gallery-item img' );
-
-        if ( !galleryItems.length ) return;
-
-        let lightbox = document.querySelector( '.lightbox' );
-
-        if ( !lightbox ) {
-
-            lightbox = document.createElement( 'div' );
+        let lightbox = document.querySelector('.lightbox');
+        if (!lightbox) {
+            lightbox = document.createElement('div');
             lightbox.className = 'lightbox';
-            lightbox.setAttribute( 'aria-hidden', 'true' );
+            lightbox.innerHTML = `
+                <button class="lightbox-close" aria-label="Close">✕</button>
+                <img class="lightbox-image" alt="">
+                <p class="lightbox-caption"></p>
+            `;
+            document.body.appendChild(lightbox);
 
-            const closeBtn = document.createElement( 'button' );
-            closeBtn.className = 'lightbox-close';
-            closeBtn.innerHTML = '✕';
-            closeBtn.setAttribute( 'aria-label', 'Close lightbox' );
-
-            const img = document.createElement( 'img' );
-            img.className = 'lightbox-image';
-            img.alt = '';
-
-            const caption = document.createElement( 'p' );
-            caption.className = 'lightbox-caption';
-
-            lightbox.appendChild( closeBtn );
-            lightbox.appendChild( img );
-            lightbox.appendChild( caption );
-            document.body.appendChild( lightbox );
-
-            lightbox.addEventListener( 'click', function( e ) {
-
-                if ( e.target === this ) {
-                    closeLightbox();
-                }
-
-            } );
-
-            document.addEventListener( 'keydown', function( e ) {
-
-                if ( e.key === 'Escape' && lightbox.classList.contains( 'open' ) ) {
-                    closeLightbox();
-                }
-
-            } );
-
-            closeBtn.addEventListener( 'click', closeLightbox );
+            const closeBtn = lightbox.querySelector('.lightbox-close');
+            closeBtn.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
             function closeLightbox() {
-                lightbox.classList.remove( 'open' );
-                lightbox.setAttribute( 'aria-hidden', 'true' );
+                lightbox.classList.remove('open');
                 document.body.style.overflow = '';
             }
-
             window.closeLightbox = closeLightbox;
-
         }
 
-        galleryItems.forEach( img => {
-
-            img.style.cursor = 'pointer';
-
-            img.addEventListener( 'click', function() {
-
-                const lightboxImg = lightbox.querySelector( '.lightbox-image' );
-                const caption = lightbox.querySelector( '.lightbox-caption' );
-
-                lightboxImg.src = this.src;
-                lightboxImg.alt = this.alt || 'FuelOil Gallery';
-
-                let captionText = this.alt;
-
-                const figure = this.closest( 'figure' );
-                const figCaption = figure ? figure.querySelector( 'figcaption' ) : null;
-
-                if ( figCaption ) {
-                    captionText = figCaption.textContent;
-                }
-
-                caption.textContent = captionText || 'FuelOil';
-
-                lightbox.classList.add( 'open' );
-                lightbox.setAttribute( 'aria-hidden', 'false' );
+        galleryItems.forEach(img => {
+            img.addEventListener('click', function () {
+                lightbox.querySelector('.lightbox-image').src = this.src;
+                const figCaption = this.closest('figure')?.querySelector('figcaption');
+                lightbox.querySelector('.lightbox-caption').textContent = figCaption ? figCaption.textContent : this.alt;
+                lightbox.classList.add('open');
                 document.body.style.overflow = 'hidden';
-
-            } );
-
-        } );
-
+            });
+        });
     }
 
-    /* ==========================================================
-       TYPING EFFECT
-    ========================================================== */
+    // ==========================================================
+    // МУЗЫКАЛЬНЫЙ ПЛЕЕР (ДЕМО)
+    // ==========================================================
+    function musicPlayer() {
+        const albumButtons = document.querySelectorAll('.album-buttons a');
+        albumButtons.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                const text = this.textContent.trim().toLowerCase();
+                const songName = this.closest('.album')?.querySelector('h3')?.textContent || 'трек';
 
-    function typingEffect() {
-
-        const element = document.querySelector( '.hero-description' );
-
-        if ( !element ) return;
-
-        const originalText = element.textContent;
-
-        element.textContent = '';
-
-        let index = 0;
-        let isDeleting = false;
-        let speed = 80;
-
-        function type() {
-
-            const currentText = originalText.substring( 0, index );
-
-            element.textContent = currentText;
-
-            if ( !isDeleting ) {
-
-                if ( index < originalText.length ) {
-                    index++;
-                    setTimeout( type, speed );
+                if (text === 'listen') {
+                    e.preventDefault();
+                    showToast(`▶️ Воспроизведение "${songName}" (демо)`);
+                } else if (text === 'lyrics') {
+                    // Даем стандартному переходу сработать (плавный скролл)
                 } else {
-                    isDeleting = true;
-                    setTimeout( type, 3000 );
+                    e.preventDefault();
+                    showToast(`📝 Страница "${songName}" в разработке`);
                 }
+            });
+        });
 
-            } else {
-
-                if ( index > 0 ) {
-                    index--;
-                    setTimeout( type, speed / 2 );
-                } else {
-                    isDeleting = false;
-                    setTimeout( type, 500 );
-                }
-
+        function showToast(message) {
+            let toast = document.querySelector('.toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.className = 'toast';
+                document.body.appendChild(toast);
             }
-
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => toast.classList.remove('show'), 2500);
         }
-
-        setTimeout( type, 1500 );
-
     }
 
-    /* ==========================================================
-       PROGRESS BAR
-    ========================================================== */
-
-    function progressBar() {
-
-        let bar = document.querySelector( '.scroll-progress' );
-
-        if ( !bar ) {
-
-            bar = document.createElement( 'div' );
-            bar.className = 'scroll-progress';
-            document.body.appendChild( bar );
-
-        }
-
-        let ticking = false;
-
-        window.addEventListener( 'scroll', function() {
-
-            if ( !ticking ) {
-
-                window.requestAnimationFrame( function() {
-
-                    const scrollTop = window.pageYOffset;
-                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                    const progress = docHeight > 0 ? ( scrollTop / docHeight ) * 100 : 0;
-
-                    bar.style.width = progress + '%';
-
-                    ticking = false;
-
-                } );
-
-                ticking = true;
-
-            }
-
-        }, { passive: true } );
-
-    }
-
-    /* ==========================================================
-       COOKIES CONSENT
-    ========================================================== */
-
-    function cookiesConsent() {
-
-        if ( localStorage.getItem( 'fueloil-cookies' ) === 'accepted' ) {
-            return;
-        }
-
-        const banner = document.createElement( 'div' );
-        banner.className = 'cookies-banner';
-
-        banner.innerHTML = `
-            <p>🍪 Мы используем cookies, чтобы сайт работал лучше. Продолжая использовать сайт, вы соглашаетесь с этим.</p>
-            <button class="cookies-accept">Принять</button>
-        `;
-
-        document.body.appendChild( banner );
-
-        const acceptBtn = banner.querySelector( '.cookies-accept' );
-
-        acceptBtn.addEventListener( 'click', function() {
-
-            localStorage.setItem( 'fueloil-cookies', 'accepted' );
-            banner.style.opacity = '0';
-            banner.style.transform = 'translateX(-50%) translateY(20px)';
-            banner.style.transition = 'all 0.4s ease';
-
-            setTimeout( function() {
-                banner.remove();
-            }, 400 );
-
-        } );
-
-    }
-
-    /* ==========================================================
-       RANDOM QUOTE
-    ========================================================== */
-
-    function randomQuote() {
-
-        const quotes = [
-            '"The city forgot our names. So we screamed louder."',
-            '"I never wanted heaven. I just wanted someone to stay."',
-            '"We\'re not trying to be heroes. We\'re just writing what hurts."',
-            '"There is beauty in ruined things."',
-            '"Sometimes the only way to be heard is to break the silence."',
-            '"Every scar tells a story. We\'re just sharing ours."',
-            '"The world doesn\'t get better. We just become louder."',
-            '"The night is dark, but so are we."',
-            '"We are the echoes of forgotten dreams."',
-            '"Burn bright, even when it hurts."'
-        ];
-
-        const ending = document.querySelector( '.ending blockquote' );
-
-        if ( ending ) {
-
-            let currentIndex = 0;
-
-            function changeQuote() {
-
-                let newIndex;
-
-                do {
-                    newIndex = Math.floor( Math.random() * quotes.length );
-                } while ( newIndex === currentIndex && quotes.length > 1 );
-
-                currentIndex = newIndex;
-
-                ending.style.opacity = '0';
-                ending.style.transition = 'opacity 0.6s ease';
-
-                setTimeout( function() {
-                    ending.textContent = quotes[ currentIndex ];
-                    ending.style.opacity = '1';
-                }, 600 );
-
-            }
-
-            setTimeout( changeQuote, 8000 );
-            setInterval( changeQuote, 14000 );
-
-        }
-
-    }
-
-    /* ==========================================================
-       MERCH FILTERS
-    ========================================================== */
-
-    function merchFilters() {
-        const buttons = document.querySelectorAll('.filter-btn');
-        const cards = document.querySelectorAll('.merch-card');
+    // ==========================================================
+    // МАГАЗИН (ФИЛЬТРЫ И ВЫБОР ОПЦИЙ)
+    // ==========================================================
+    function initMerch() {
+        // Фильтры
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const merchCards = document.querySelectorAll('.merch-card');
         
-        if (!buttons.length || !cards.length) return;
-        
-        buttons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                buttons.forEach(b => b.classList.remove('active'));
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                filterBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                
                 const filter = this.dataset.filter;
-                
-                cards.forEach(card => {
-                    if (filter === 'all') {
-                        card.style.display = 'block';
-                    } else if (card.dataset.category === filter) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
+
+                merchCards.forEach(card => {
+                    card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
                 });
             });
         });
-    }
 
-    /* ==========================================================
-       MERCH HANDLER (Add to cart)
-    ========================================================== */
-
-    function merchHandler() {
-
-        const buttons = document.querySelectorAll( '.merch-btn' );
-
-        buttons.forEach( btn => {
-
-            btn.addEventListener( 'click', function() {
-
-                const card = this.closest('.merch-card');
-                const itemName = this.getAttribute( 'data-item' ) || 'товар';
-                const price = parseInt(this.getAttribute( 'data-price' )) || 0;
-                
-                // Get selected size
-                const sizeBtn = card.querySelector('.size-btn.active');
-                const size = sizeBtn ? sizeBtn.dataset.size : 'One Size';
-                
-                // Get quantity
-                const qtyEl = card.querySelector('.qty-count');
-                const quantity = qtyEl ? parseInt(qtyEl.textContent) : 1;
-                
-                // Get stock
-                const stockEl = card.querySelector('.stock-count');
-                const stock = stockEl ? parseInt(stockEl.textContent) : 99;
-                
-                // Check stock
-                if (quantity > stock) {
-                    showAddToCartNotification('❌ Недостаточно товара на складе!', '');
-                    return;
-                }
-
-                // Add to cart
-                addToCart({
-                    name: itemName,
-                    price: price,
-                    size: size,
-                    quantity: quantity,
-                    stock: stock
+        // Выбор размера
+        document.querySelectorAll('.size-selector').forEach(selector => {
+            selector.querySelectorAll('.size-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    selector.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
                 });
-
-                // Update stock display
-                if (stockEl) {
-                    const newStock = stock - quantity;
-                    stockEl.textContent = newStock;
-                    
-                    // Update dot
-                    const dot = card.querySelector('.stock-dot');
-                    if (dot) {
-                        if (newStock <= 3) {
-                            dot.classList.add('low');
-                        } else {
-                            dot.classList.remove('low');
-                        }
-                        if (newStock <= 0) {
-                            dot.classList.add('out');
-                            this.textContent = '❌ Нет в наличии';
-                            this.disabled = true;
-                        }
-                    }
-                }
-
-                // Show notification
-                showAddToCartNotification(
-                    `🛒 ${itemName}`, 
-                    `${price * quantity} ₽`
-                );
-
-                // Button feedback
-                const originalText = this.textContent;
-                this.textContent = '✅ Добавлено!';
-                this.style.borderColor = 'rgba(80, 160, 80, 0.3)';
-                this.style.background = 'rgba(80, 160, 80, 0.05)';
-
-                setTimeout( () => {
-                    this.textContent = originalText;
-                    this.style.borderColor = '';
-                    this.style.background = '';
-                }, 2000 );
-
-                if ( navigator.vibrate ) {
-                    navigator.vibrate( 30 );
-                }
-
-            } );
-
-        } );
-
-        // Size selector
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const parent = this.closest('.size-selector');
-                parent.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
             });
         });
 
-        // Quantity controls
+        // Изменение количества
         document.querySelectorAll('.quantity-selector').forEach(selector => {
             const minus = selector.querySelector('.minus');
             const plus = selector.querySelector('.plus');
             const count = selector.querySelector('.qty-count');
-            
-            minus.addEventListener('click', function() {
-                let val = parseInt(count.textContent);
-                if (val > 1) {
-                    count.textContent = val - 1;
-                }
+
+            minus.addEventListener('click', () => {
+                const val = parseInt(count.textContent);
+                if (val > 1) count.textContent = val - 1;
             });
-            
-            plus.addEventListener('click', function() {
-                let val = parseInt(count.textContent);
-                const card = this.closest('.merch-card');
-                const stockEl = card ? card.querySelector('.stock-count') : null;
-                const stock = stockEl ? parseInt(stockEl.textContent) : 99;
-                if (val < stock) {
-                    count.textContent = val + 1;
-                } else {
-                    showAddToCartNotification('⚠️ Больше нет на складе', '');
-                }
+
+            plus.addEventListener('click', () => {
+                const val = parseInt(count.textContent);
+                const card = selector.closest('.merch-card');
+                const stock = parseInt(card.querySelector('.stock-count').textContent);
+                if (val < stock) count.textContent = val + 1;
+                else showCartNotification('⚠️ Больше нет на складе');
             });
         });
 
+        // Добавление в корзину
+        document.querySelectorAll('.merch-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const card = this.closest('.merch-card');
+                const name = this.getAttribute('data-item');
+                const price = parseInt(this.getAttribute('data-price'));
+                const size = card.querySelector('.size-btn.active')?.dataset.size || 'One Size';
+                const quantity = parseInt(card.querySelector('.qty-count').textContent);
+                const stockEl = card.querySelector('.stock-count');
+                const stock = parseInt(stockEl.textContent);
+
+                if (quantity > stock) {
+                    showCartNotification('❌ Недостаточно товара');
+                    return;
+                }
+
+                // Добавляем
+                addToCart({ name, price, size, quantity });
+
+                // Обновляем сток визуально
+                const newStock = stock - quantity;
+                stockEl.textContent = newStock;
+                if (newStock <= 3) card.querySelector('.stock-dot').classList.add('low');
+                if (newStock <= 0) {
+                    card.querySelector('.stock-dot').classList.add('out');
+                    this.textContent = 'Нет в наличии';
+                    this.disabled = true;
+                }
+
+                // Визуальный отклик
+                const originalText = this.textContent;
+                this.textContent = '✅ Добавлено!';
+                setTimeout(() => { if(newStock > 0) this.textContent = originalText; }, 1500);
+            });
+        });
     }
 
-    /* ==========================================================
-       CART SYSTEM
-    ========================================================== */
+    // ==========================================================
+    // СИСТЕМА КОРЗИНЫ
+    // ==========================================================
+    function initCart() {
+        const overlay = document.getElementById('cartOverlay');
+        const closeBtn = document.getElementById('cartClose');
+        const cartToggle = document.querySelector('.cart-toggle');
+        const checkoutBtn = document.getElementById('checkoutBtn');
 
-    let cart = [];
-    let discountApplied = 0;
+        if (cartToggle) cartToggle.addEventListener('click', openCart);
+        if (closeBtn) closeBtn.addEventListener('click', closeCart);
+        if (overlay) overlay.addEventListener('click', (e) => { if (e.target === overlay) closeCart(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCart(); });
+
+        // Промокоды
+        const promoInput = document.querySelector('.promo-input');
+        const promoApply = document.querySelector('.promo-apply');
+        const promoMessage = document.querySelector('.promo-message');
+
+        if (promoApply && promoInput) {
+            promoApply.addEventListener('click', function () {
+                const code = promoInput.value.trim().toUpperCase();
+                if (CONFIG.promoCodes[code]) {
+                    discountApplied = CONFIG.promoCodes[code];
+                    promoMessage.textContent = `✅ Скидка ${discountApplied}% применена!`;
+                    promoMessage.style.color = '#8aaa8a';
+                } else {
+                    discountApplied = 0;
+                    promoMessage.textContent = '❌ Неверный промокод';
+                    promoMessage.style.color = '#cc6a6a';
+                }
+                updateCartUI();
+            });
+        }
+
+        // Оформление заказа
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', () => {
+                if (cart.length === 0) return showCartNotification('⚠️ Корзина пуста');
+                showOrderForm();
+            });
+        }
+
+        updateCartUI(); // Первичная отрисовка при загрузке
+    }
 
     function addToCart(item) {
         const existing = cart.find(i => i.name === item.name && i.size === item.size);
-        if (existing) {
-            existing.quantity += item.quantity;
-        } else {
-            cart.push({...item});
-        }
+        if (existing) existing.quantity += item.quantity;
+        else cart.push({ ...item });
+
+        saveCart();
         updateCartUI();
-        updateCartCount();
+        showCartNotification(`🛒 ${item.name} добавлен`);
     }
 
     function removeFromCart(index) {
         cart.splice(index, 1);
+        saveCart();
         updateCartUI();
-        updateCartCount();
     }
 
-    function updateCartCount() {
-        const countEl = document.querySelector('.cart-count');
-        if (!countEl) return;
-        const total = cart.reduce((sum, i) => sum + i.quantity, 0);
-        if (total > 0) {
-            countEl.textContent = total;
-            countEl.classList.add('visible');
-        } else {
-            countEl.classList.remove('visible');
-        }
+    function saveCart() {
+        localStorage.setItem('fueloil-cart', JSON.stringify(cart));
     }
 
     function updateCartUI() {
         const container = document.getElementById('cartItems');
         const totalEl = document.getElementById('cartTotal');
+        const countEl = document.querySelector('.cart-count');
         
         if (!container || !totalEl) return;
-        
+
+        // Обновляем счетчик в шапке
+        const totalItems = cart.reduce((sum, i) => sum + i.quantity, 0);
+        if (countEl) countEl.textContent = totalItems;
+
         if (cart.length === 0) {
             container.innerHTML = '<div class="empty-cart">Корзина пуста</div>';
             totalEl.textContent = '₽0';
             return;
         }
-        
+
         let html = '';
         let total = 0;
-        
+
         cart.forEach((item, index) => {
             const itemTotal = item.price * item.quantity;
             total += itemTotal;
@@ -1080,34 +683,22 @@
                 </div>
             `;
         });
-        
-        // Apply discount
+
         if (discountApplied > 0) {
             const discountAmount = Math.round(total * discountApplied / 100);
-            total = total - discountAmount;
-            html += `
-                <div style="color: #8aaa8a; text-align: right; font-size: 0.8rem; padding: 0.5rem 0;">
-                    Скидка ${discountApplied}%: -${discountAmount} ₽
-                </div>
-            `;
+            total -= discountAmount;
+            html += `<div class="cart-discount">Скидка ${discountApplied}%: -${discountAmount} ₽</div>`;
         }
-        
+
         container.innerHTML = html;
         totalEl.textContent = `₽${total}`;
-        
-        // Remove buttons
+
+        // Вешаем события на кнопки удаления
         container.querySelectorAll('.cart-item-remove').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const index = parseInt(this.dataset.index);
-                removeFromCart(index);
+            btn.addEventListener('click', function () {
+                removeFromCart(parseInt(this.dataset.index));
             });
         });
-        
-        // Update cart count badge click
-        const countEl = document.querySelector('.cart-count');
-        if (countEl) {
-            countEl.addEventListener('click', openCart);
-        }
     }
 
     function openCart() {
@@ -1124,237 +715,60 @@
             overlay.classList.remove('open');
             document.body.style.overflow = '';
         }
+        // Удаляем форму заказа при закрытии, если она была
+        document.querySelector('.order-form-wrapper')?.remove();
     }
 
-    function getCartTotal() {
-        let total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-        if (discountApplied > 0) {
-            total = total - Math.round(total * discountApplied / 100);
-        }
-        return total;
-    }
-
-    function getCartItems() {
-        return cart;
-    }
-
-    function showAddToCartNotification(itemName, price) {
+    function showCartNotification(message) {
         const notification = document.createElement('div');
         notification.className = 'cart-notification';
-        notification.innerHTML = `
-            <span>🛒</span>
-            <span>${itemName}</span>
-            <span>${price ? price + ' добавлен в корзину' : ''}</span>
-        `;
+        notification.innerHTML = `<span>🛒</span><span>${message}</span>`;
         document.body.appendChild(notification);
         
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 10);
-        
+        setTimeout(() => notification.classList.add('show'), 10);
         setTimeout(() => {
             notification.classList.remove('show');
-            setTimeout(() => {
-                notification.remove();
-            }, 500);
+            setTimeout(() => notification.remove(), 500);
         }, 2500);
     }
 
-    /* ==========================================================
-       CART SYSTEM - INIT
-    ========================================================== */
-
-    function cartSystem() {
-        
-        // Cart overlay controls
-        const overlay = document.getElementById('cartOverlay');
-        const closeBtn = document.getElementById('cartClose');
-        const checkoutBtn = document.getElementById('checkoutBtn');
-        
-        if (closeBtn) {
-            closeBtn.addEventListener('click', closeCart);
-        }
-        
-        if (overlay) {
-            overlay.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeCart();
-                }
-            });
-            
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeCart();
-                }
-            });
-        }
-        
-        // Cart count click
-        const countEl = document.querySelector('.cart-count');
-        if (countEl) {
-            countEl.addEventListener('click', openCart);
-        }
-        
-        // Promo codes
-        const promoInput = document.querySelector('.promo-input');
-        const promoApply = document.querySelector('.promo-apply');
-        const promoMessage = document.querySelector('.promo-message');
-        
-        const promoCodes = {
-            'FUELOIL10': 10,
-            'EMO2026': 15,
-            'WELCOME': 5
-        };
-        
-        if (promoApply && promoInput && promoMessage) {
-            promoApply.addEventListener('click', function() {
-                const code = promoInput.value.trim().toUpperCase();
-                
-                if (promoCodes[code]) {
-                    discountApplied = promoCodes[code];
-                    promoMessage.textContent = `✅ Скидка ${discountApplied}% применена!`;
-                    promoMessage.style.color = '#8aaa8a';
-                    updateCartUI();
-                } else {
-                    discountApplied = 0;
-                    promoMessage.textContent = '❌ Неверный промокод';
-                    promoMessage.style.color = '#cc6a6a';
-                    updateCartUI();
-                }
-            });
-            
-            promoInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    promoApply.click();
-                }
-            });
-        }
-        
-        // Checkout
-        if (checkoutBtn) {
-            checkoutBtn.addEventListener('click', function() {
-                if (cart.length === 0) {
-                    showAddToCartNotification('⚠️ Корзина пуста', '');
-                    return;
-                }
-                
-                const total = getCartTotal();
-                const items = getCartItems();
-                
-                // Show order form
-                showOrderForm(items, total);
-            });
-        }
-    }
-
-    /* ==========================================================
-       ORDER FORM
-    ========================================================== */
-
-    function showOrderForm(items, total) {
-        // Remove existing form if any
+    // ==========================================================
+    // ФОРМА ЗАКАЗА
+    // ==========================================================
+    function showOrderForm() {
         const existingForm = document.querySelector('.order-form-wrapper');
-        if (existingForm) {
-            existingForm.remove();
-        }
+        if (existingForm) existingForm.remove();
+
+        const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0) * (1 - discountApplied / 100);
         
         const wrapper = document.createElement('div');
         wrapper.className = 'order-form-wrapper';
-        wrapper.style.cssText = `
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(120, 80, 80, 0.1);
-        `;
-        
         wrapper.innerHTML = `
-            <h4 style="color: #ffffff; margin-bottom: 1rem; font-size: 1rem;">Оформление заказа</h4>
-            <form class="order-form" style="display: flex; flex-direction: column; gap: 0.8rem;">
-                <input type="text" placeholder="Ваше имя" required style="background: rgba(16,12,14,0.7); border: 1px solid rgba(120,80,80,0.1); border-radius: 4px; padding: 0.8rem 1rem; color: #d4c9c9; font-size: 0.9rem;">
-                <input type="tel" placeholder="Телефон" required style="background: rgba(16,12,14,0.7); border: 1px solid rgba(120,80,80,0.1); border-radius: 4px; padding: 0.8rem 1rem; color: #d4c9c9; font-size: 0.9rem;">
-                <input type="email" placeholder="Email" required style="background: rgba(16,12,14,0.7); border: 1px solid rgba(120,80,80,0.1); border-radius: 4px; padding: 0.8rem 1rem; color: #d4c9c9; font-size: 0.9rem;">
-                <textarea placeholder="Адрес доставки" rows="3" style="background: rgba(16,12,14,0.7); border: 1px solid rgba(120,80,80,0.1); border-radius: 4px; padding: 0.8rem 1rem; color: #d4c9c9; font-size: 0.9rem; font-family: inherit; resize: vertical;"></textarea>
-                <div style="display: flex; justify-content: space-between; color: #9a8a8a; font-size: 0.85rem; padding: 0.5rem 0;">
-                    <span>${items.length} товара</span>
-                    <span>Итого: ${total} ₽</span>
+            <h4>Оформление заказа</h4>
+            <form class="order-form">
+                <input type="text" placeholder="Ваше имя" required>
+                <input type="tel" placeholder="Телефон" required>
+                <input type="email" placeholder="Email" required>
+                <textarea placeholder="Адрес доставки" rows="2"></textarea>
+                <div class="order-summary">
+                    <span>К оплате:</span>
+                    <span>${Math.round(total)} ₽</span>
                 </div>
-                <button type="submit" style="width: 100%; padding: 0.8rem; background: rgba(160,80,80,0.15); border: 1px solid rgba(160,80,80,0.2); color: #ffffff; border-radius: 30px; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; transition: all 0.3s ease;">
-                    ✅ Подтвердить заказ
-                </button>
+                <button type="submit">✅ Подтвердить</button>
             </form>
         `;
-        
-        const cartFooter = document.querySelector('.cart-footer');
-        if (cartFooter) {
-            cartFooter.appendChild(wrapper);
-        }
-        
-        // Handle order submit
-        const form = wrapper.querySelector('.order-form');
-        form.addEventListener('submit', function(e) {
+
+        document.querySelector('.cart-footer').appendChild(wrapper);
+
+        wrapper.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const inputs = this.querySelectorAll('input, textarea');
-            let allFilled = true;
-            inputs.forEach(inp => {
-                if (!inp.value.trim()) {
-                    inp.style.borderColor = 'rgba(200,80,80,0.3)';
-                    allFilled = false;
-                } else {
-                    inp.style.borderColor = '';
-                }
-            });
-            
-            if (!allFilled) {
-                showAddToCartNotification('⚠️ Заполните все поля', '');
-                return;
-            }
-            
-            showAddToCartNotification('✅ Заказ оформлен! Свяжемся с вами 🖤', '');
+            showCartNotification('✅ Заказ оформлен! Свяжемся с вами 🖤');
             cart = [];
             discountApplied = 0;
+            saveCart();
             updateCartUI();
-            updateCartCount();
-            
-            // Remove order form
-            setTimeout(() => {
-                wrapper.remove();
-                closeCart();
-            }, 1500);
+            setTimeout(closeCart, 1500);
         });
     }
 
-    /* ==========================================================
-       FALLBACKS
-    ========================================================== */
-
-    if ( !window.requestAnimationFrame ) {
-
-        window.requestAnimationFrame = function( callback ) {
-
-            return window.setTimeout( function() {
-                callback( Date.now() );
-            }, 1000 / 60 );
-
-        };
-
-    }
-
-    if ( !window.IntersectionObserver ) {
-
-        console.warn( '⚠️ IntersectionObserver не поддерживается.' );
-
-        document.addEventListener( 'DOMContentLoaded', function() {
-
-            const elements = document.querySelectorAll( '.animate-on-scroll' );
-
-            elements.forEach( function( el ) {
-                el.classList.add( 'visible' );
-            } );
-
-        } );
-
-    }
-
-    console.log( '✅ FuelOil script fully loaded.' );
-    console.log( '🖤 Stay loud. Stay broken. Stay real.' );
-
-} )();
+})();
