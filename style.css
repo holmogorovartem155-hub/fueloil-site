@@ -1152,3 +1152,82 @@ footer small {
     color: rgba(240, 224, 64, 0.2);
     z-index: 0;
 }
+
+/* ---------- ЗАГЛУШКИ ДЛЯ КАРТИНОК ---------- */
+
+.logo-placeholder {
+    font-family: 'Liquid', 'Impact', sans-serif;
+    font-size: 1.5rem;
+    color: #f0e040;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 0.2rem 0.5rem;
+    border: 2px solid #f0e040;
+    border-radius: 4px;
+    display: inline-block;
+    animation: logo-flicker 4s infinite;
+}
+
+.logo-placeholder.large {
+    font-size: clamp(2.5rem, 10vw, 6rem);
+    border: none;
+    padding: 0;
+    color: #ffffff;
+    text-shadow: 0 0 60px rgba(240, 224, 64, 0.3);
+}
+
+.logo-placeholder.small {
+    font-size: 1.2rem;
+    border: none;
+    color: #f0e040;
+    opacity: 0.7;
+}
+
+.img-placeholder {
+    background: #0a0a0a;
+    background-image: 
+        radial-gradient(ellipse at 30% 20%, rgba(240, 224, 64, 0.06) 0%, transparent 60%),
+        linear-gradient(135deg, #111 0%, #050505 100%);
+    border: 1px solid rgba(240, 224, 64, 0.1);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+}
+
+.img-placeholder.album {
+    aspect-ratio: 1/1;
+}
+
+.img-placeholder::before {
+    content: attr(data-label);
+    font-family: 'Liquid', 'Impact', sans-serif;
+    font-size: clamp(1rem, 3vw, 2rem);
+    color: rgba(240, 224, 64, 0.2);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+}
+
+.img-placeholder::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(240, 224, 64, 0.08);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    animation: triangle-pulse 2s ease-in-out infinite;
+}
+
+/* Убираем старые стили для img, если они были */
+.about-image img,
+.contact-image img,
+.album-cover img {
+    display: none;
+}

@@ -10,13 +10,10 @@
 </head>
 <body>
 
-    <!-- ==========================================================
-         HEADER
-    ========================================================== -->
     <header id="top">
         <div class="logo">
             <a href="#hero">
-                <img src="images/logo.png" alt="FuelOil Logo">
+                <div class="logo-placeholder">FUELOIL</div>
             </a>
         </div>
         <nav>
@@ -34,14 +31,12 @@
     </header>
 
     <main>
-        <!-- ==========================================================
-             HERO (по референсу: лого, фото, треугольник, кнопка)
-        ========================================================== -->
+        <!-- HERO -->
         <section id="hero">
-            <div class="hero-bg" style="background-image: url('images/hero-bg.jpg');"></div>
+            <div class="hero-bg"></div>
             <div class="hero-content">
                 <div class="hero-logo">
-                    <img src="images/logo.png" alt="FuelOil">
+                    <div class="logo-placeholder large">FUELOIL</div>
                 </div>
                 <p class="hero-subtitle">МОСКОВСКИЙ ЭМО-ГРАНЖ<br>НА АНГЛИЙСКОМ</p>
                 <p class="hero-year">2026</p>
@@ -53,9 +48,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================
-             ABOUT (О нас)
-        ========================================================== -->
+        <!-- ABOUT -->
         <section id="about">
             <div class="section-header">
                 <h2>О нас</h2>
@@ -68,7 +61,7 @@
                     <p>FuelOil — это магия, который горит.</p>
                 </div>
                 <div class="about-image">
-                    <img src="images/about-photo.jpg" alt="FuelOil back" loading="lazy">
+                    <div class="img-placeholder" data-label="FUELOIL"></div>
                 </div>
                 <div class="about-quote">
                     <p>NO WINGS<br>JUST FREEDOM</p>
@@ -76,44 +69,39 @@
             </div>
         </section>
 
-        <!-- ==========================================================
-             MUSIC + LYRICS (объединённый блок, как в Яндекс.Музыке)
-        ========================================================== -->
+        <!-- MUSIC + LYRICS -->
         <section id="music">
             <div class="section-header">
                 <h2>Музыка</h2>
             </div>
             <div class="music-player">
-                <!-- Слева: список треков -->
                 <div class="tracklist">
                     <div class="album-cover">
-                        <img src="images/album-cover.jpg" alt="FuelOil" loading="lazy">
+                        <div class="img-placeholder album" data-label="FUELOIL"></div>
                     </div>
                     <ul class="tracks" id="tracklist">
-                        <li class="track active" data-track="wingless" data-lyrics="wingless">
+                        <li class="track active" data-track="wingless">
                             <span class="track-name">Wingless</span>
                             <span class="track-duration">3:42</span>
                         </li>
-                        <li class="track" data-track="hey-mom" data-lyrics="hey-mom">
+                        <li class="track" data-track="hey-mom">
                             <span class="track-name">Hey Mom</span>
                             <span class="track-duration">4:18</span>
                         </li>
-                        <li class="track" data-track="cherry-love" data-lyrics="cherry-love">
+                        <li class="track" data-track="cherry-love">
                             <span class="track-name">Cherry Love</span>
                             <span class="track-duration">3:56</span>
                         </li>
-                        <li class="track" data-track="silly-fever" data-lyrics="silly-fever">
+                        <li class="track" data-track="silly-fever">
                             <span class="track-name">Silly Fever</span>
                             <span class="track-duration">4:21</span>
                         </li>
-                        <li class="track" data-track="freedom" data-lyrics="freedom">
+                        <li class="track" data-track="freedom">
                             <span class="track-name">Freedom</span>
                             <span class="track-duration">5:03</span>
                         </li>
                     </ul>
                 </div>
-
-                <!-- Справа: текст песни + заглушка плеера -->
                 <div class="lyrics-panel">
                     <div class="lyrics-title">
                         <h3 id="lyricsTitle">Wingless</h3>
@@ -138,9 +126,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================
-             SHOWS (Концерты — оформлено органично на будущее)
-        ========================================================== -->
+        <!-- SHOWS -->
         <section id="shows">
             <div class="section-header">
                 <h2>Концерты</h2>
@@ -171,9 +157,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================
-             MERCH (в разработке)
-        ========================================================== -->
+        <!-- MERCH -->
         <section id="merch">
             <div class="section-header">
                 <h2>Мерч</h2>
@@ -188,9 +172,7 @@
             </div>
         </section>
 
-        <!-- ==========================================================
-             CONTACT (Контакты)
-        ========================================================== -->
+        <!-- CONTACT -->
         <section id="contact">
             <div class="section-header">
                 <h2>Контакты</h2>
@@ -207,23 +189,19 @@
                     </ul>
                 </div>
                 <div class="contact-image">
-                    <img src="images/contact-photo.jpg" alt="FuelOil" loading="lazy">
+                    <div class="img-placeholder" data-label="FUELOIL"></div>
                 </div>
             </div>
         </section>
 
-        <!-- ENDING QUOTE -->
         <section class="ending">
             <blockquote>"The city forgot our names.<br>So we screamed louder."</blockquote>
         </section>
     </main>
 
-    <!-- ==========================================================
-         FOOTER
-    ========================================================== -->
     <footer>
         <div class="footer-logo">
-            <img src="images/logo-white.png" alt="FuelOil Logo" loading="lazy">
+            <div class="logo-placeholder small">FUELOIL</div>
         </div>
         <p class="footer-tagline">DIRTY SOULS / CLEAN SOUND</p>
         <nav class="footer-nav">
