@@ -1231,3 +1231,157 @@ footer small {
 .album-cover img {
     display: none;
 }
+
+
+/* ---------- ЛОГО БЕЛЫЙ ---------- */
+.logo-placeholder {
+    font-family: 'Liquid', 'Impact', sans-serif;
+    font-size: 1.5rem;
+    color: #ffffff;               /* БЫЛО #f0e040 */
+    letter-spacing: 0.1em;
+    text-transform: none;         /* не капсом */
+    line-height: 1;
+    padding: 0.2rem 0.5rem;
+    border: 2px solid #ffffff;    /* белая рамка */
+    border-radius: 4px;
+    display: inline-block;
+    animation: logo-flicker 4s infinite;
+}
+
+.logo-placeholder.large {
+    font-size: clamp(2.5rem, 10vw, 6rem);
+    border: none;
+    padding: 0;
+    color: #ffffff;
+    text-shadow: 0 0 60px rgba(255, 255, 255, 0.2);
+}
+
+.logo-placeholder.small {
+    font-size: 1.2rem;
+    border: none;
+    color: #ffffff;
+    opacity: 0.7;
+}
+
+/* ---------- ЗАГЛУШКИ ---------- */
+.img-placeholder {
+    background: #0a0a0a;
+    background-image: 
+        radial-gradient(ellipse at 30% 20%, rgba(240, 224, 64, 0.06) 0%, transparent 60%),
+        linear-gradient(135deg, #111 0%, #050505 100%);
+    border: 1px solid rgba(240, 224, 64, 0.1);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+}
+
+.img-placeholder.album {
+    aspect-ratio: 1/1;
+}
+
+.img-placeholder::before {
+    content: attr(data-label);
+    font-family: 'Liquid', 'Impact', sans-serif;
+    font-size: clamp(1rem, 3vw, 2rem);
+    color: rgba(255, 255, 255, 0.2);   /* белый вместо жёлтого */
+    letter-spacing: 0.1em;
+    text-transform: none;
+    position: relative;
+    z-index: 1;
+}
+
+.img-placeholder::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(240, 224, 64, 0.08);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    animation: triangle-pulse 2s ease-in-out infinite;
+}
+
+.about-image img,
+.contact-image img,
+.album-cover img {
+    display: none;
+}
+
+/* ---------- ПЛЕЕР ---------- */
+.player {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(240, 224, 64, 0.03);
+    border: 1px solid rgba(240, 224, 64, 0.12);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.player-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid #f0e040;
+    background: transparent;
+    color: #f0e040;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.player-btn:hover {
+    background: rgba(240, 224, 64, 0.1);
+    box-shadow: 0 0 20px rgba(240, 224, 64, 0.2);
+}
+
+.player-btn.playing {
+    background: rgba(240, 224, 64, 0.15);
+}
+
+.player-progress {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.player-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #f0e040;
+    border-radius: 2px;
+    transition: width 0.1s linear;
+}
+
+.player-time {
+    font-size: 0.75rem;
+    color: #8a7a7a;
+    min-width: 40px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- УБИРАЕМ ЛИШНЕЕ ---------- */
+/* Футер: убираем меню (его больше нет в HTML), оставляем соцсети */
+.footer-nav { display: none; }
+.footer-tagline { display: none; }
+.about-quote { display: none; }
+.ending { display: none; }
+
+/* Чуть подтягиваем футер, раз убрали меню */
+footer {
+    padding: 3rem 5% 2rem;
+}
